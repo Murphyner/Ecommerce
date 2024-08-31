@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#nav-menu .active{
+    color: #DC375F;
+}
+
+@media only screen and (min-width : 992px) {
+    #heroSection{
+        background-position-y: 20%;
+    }
+}
+
+.slick-dots > li {
+    margin: 0 40px !important;
+}
+
+.slick-dots{
+    bottom: -100px !important;
+}
+
+@media only screen and (max-width:576px) {
+    .slick-dots{
+        left: -10% !important;
+    }
+}
+
+@media only screen and (min-width:576px) {
+    .slick-dots{
+        left: -3% !important;
+    }
+}
+
+#test-slider .slick-active a{
+    border: 2px solid #DC375F;
+}
