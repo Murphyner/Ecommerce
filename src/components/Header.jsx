@@ -6,11 +6,25 @@ import { SlHeart } from 'react-icons/sl'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Sidemenu from './Sidemenu'
 import { AiOutlineUser } from 'react-icons/ai'
+import { useDispatch } from 'react-redux'
+import { setNum } from '../store/NumSlice'
 
 function Header() {
     const [flag, setFlag] = useState(false)
-    const flagSchema ={flag, setFlag}
+    const flagSchema = { flag, setFlag }
     const navigate = useNavigate()
+
+    const dispatch = useDispatch()
+
+    function handleWish(){
+        dispatch(setNum(4))
+        navigate('/account')
+    }
+
+    function handleUser(){
+        dispatch(setNum(1))
+        navigate('/account')
+    }
 
     return (
         <header className='px-8 py-4 md:px-0'>
@@ -70,13 +84,13 @@ function Header() {
                         </div>
                         <div className='flex lg:w-2/12 lg:justify-end items-center'>
                             <div>
-                                <button onClick={() => navigate('/account')} className='p-1'>
+                                <button onClick={handleUser} className='p-1'>
                                     <AiOutlineUser className='text-[1.25em]' />
                                 </button>
                             </div>
                             <div>
                                 <button className='p-1 mx-2'>
-                                    <SlHeart className='text-[1.25em]' />
+                                    <SlHeart onClick={handleWish} className='text-[1.25em]' />
                                 </button>
                             </div>
                             <div className='relative'>

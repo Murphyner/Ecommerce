@@ -2,11 +2,18 @@ import { MdChevronLeft } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
 import img from "../assets/avatar.jfif"
 import { CiCamera } from "react-icons/ci"
-import AccountForm from "../components/AccountForm"
-import PasswordForm from "../components/PasswordForm"
+import AccountComp from "../components/AccountComp"
+import OrdersComp from "../components/OrdersComp"
+import { useDispatch, useSelector } from "react-redux"
+import { setNum } from "../store/NumSlice"
+import WishlistComp from "../components/WishlistComp"
 
 function Account() {
     const navigate = useNavigate()
+
+    const {num} = useSelector(state => state.number)
+    const dispatch = useDispatch()
+    
     return (
         <main>
             <div className="container 2xl:w-[1280px] mx-auto md:px-4">
@@ -34,51 +41,37 @@ function Account() {
                                             </div>
                                         </div>
                                         <h3 className="text-[1.25em] mb-5 font-semibold text-center">Sofia Havertz</h3>
-                                        <select className="block w-full lg:hidden border-[#6C7275] border-2 rounded-lg p-2 outline-none">
-                                            <option value="Account" className="font-semibold text-black text-[1em]">Account</option>
-                                            <option value="Address" className="font-semibold text-black text-[1em]">Address</option>
-                                            <option value="Orders" className="font-semibold text-black text-[1em]">Orders</option>
-                                            <option value="Wishlist" className="font-semibold text-black text-[1em]">Wishlist</option>
-                                            <option value="Log Out" className="font-semibold text-black text-[1em]">Log Out</option>
+                                        <select value={num} onInput={(e) => dispatch(setNum(Number(e.target.value)))} className="block w-full lg:hidden border-[#6C7275] border-2 rounded-lg p-2 outline-none">
+                                            <option value="1" className="font-semibold text-black text-[1em]">Account</option>
+                                            <option value="2" className="font-semibold text-black text-[1em]">Address</option>
+                                            <option value="3" className="font-semibold text-black text-[1em]">Orders</option>
+                                            <option value="4" className="font-semibold text-black text-[1em]">Wishlist</option>
+                                            <option value="5" className="font-semibold text-black text-[1em]">Log Out</option>
                                         </select>
                                     </div>
                                     <div className="hidden lg:block">
                                         <ul>
-                                            <li className="py-3 border-b border-[#dc375f]">
-                                                <button className="text-[#DC375F] font-semibold text-[1em]">Account</button>
+                                            <li className={`py-3  ${num === 1 ? 'border-b border-[#dc375f]' : ''}`}>
+                                                <button onClick={() => dispatch(setNum(1))} className={` font-semibold text-[1em] ${ num === 1 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Account</button> 
                                             </li>
-                                            <li className="py-3">
-                                                <button className="text-[#6C7275] font-semibold text-[1em]">Address</button>
+                                            <li className={`py-3  ${num === 2 ? 'border-b border-[#dc375f]' : ''}`}>
+                                                <button onClick={() => dispatch(setNum(2))} className={` font-semibold text-[1em] ${ num === 2 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Address</button>
                                             </li>
-                                            <li className="py-3">
-                                                <button className="text-[#6C7275] font-semibold text-[1em]">Orders</button>
+                                            <li className={`py-3  ${num === 3 ? 'border-b border-[#dc375f]' : ''}`}>
+                                                <button onClick={() => dispatch(setNum(3))} className={` font-semibold text-[1em] ${ num === 3 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Orders</button>
                                             </li>
-                                            <li className="py-3">
-                                                <button className="text-[#6C7275] font-semibold text-[1em]">Wishlist</button>
+                                            <li className={`py-3  ${num === 4 ? 'border-b border-[#dc375f]' : ''}`}>
+                                                <button onClick={() => dispatch(setNum(4))} className={` font-semibold text-[1em] ${ num === 4 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Wishlist</button>
                                             </li>
-                                            <li className="py-3">
-                                                <button className="text-[#6C7275] font-semibold text-[1em]">Log Out</button>
+                                            <li className={`py-3  ${num === 5 ? 'border-b border-[#dc375f]' : ''}`}>
+                                                <button onClick={() => dispatch(setNum(5))} className={` font-semibold text-[1em] ${ num === 5 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Log Out</button>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                             <div className="w-full lg:w-8/12 xl:w-9/12 lg:pl-8">
-                                <div>
-                                    <div className="mb-6">
-                                        <h3 className="text-[1.25em] font-semibold mb-4">Account Details</h3>
-                                        <AccountForm />
-                                    </div>
-                                    <div className="mb-6">
-                                        <h3 className="text-[1.25em] font-semibold mb-4">Password</h3>
-                                        <PasswordForm />
-                                    </div>
-                                    <div>
-                                        <button className="bg-[#DC375F] font-medium text-[1em] text-white rounded-lg py-3 px-10">
-                                            Save changes
-                                        </button>
-                                    </div>
-                                </div>
+                                {num === 1 ? <AccountComp /> : num === 4 ? <WishlistComp /> : <OrdersComp />}
                             </div>
                         </div>
                     </div>
