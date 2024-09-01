@@ -5,7 +5,6 @@ import { IoSearchOutline } from 'react-icons/io5'
 import { SlHeart } from 'react-icons/sl'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Sidemenu from './Sidemenu'
-import { CiUser } from 'react-icons/ci'
 import { AiOutlineUser } from 'react-icons/ai'
 
 function Header() {
@@ -71,7 +70,7 @@ function Header() {
                         </div>
                         <div className='flex lg:w-2/12 lg:justify-end items-center'>
                             <div>
-                                <button className='p-1'>
+                                <button onClick={() => navigate('/account')} className='p-1'>
                                     <AiOutlineUser className='text-[1.25em]' />
                                 </button>
                             </div>

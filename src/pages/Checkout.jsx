@@ -111,7 +111,7 @@ function Checkout() {
                             </div>
                         </div>
                         <div className='w-full lg:w-8/12 xl:w-7/12 lg:pr-6'>
-                            <button className='block w-full bg-[#DC375F] text-white font-medium text-[1em] rounded-lg py-3'>Place Order</button>
+                            <button onClick={() => navigate('/complete')} className='block w-full bg-[#DC375F] text-white font-medium text-[1em] rounded-lg py-3'>Place Order</button>
                         </div>
                     </div>
                 </div>
