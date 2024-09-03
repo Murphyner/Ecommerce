@@ -34,11 +34,6 @@ function Sidemenu({ flagSchema }) {
                             </Link>
                         </li>
                         <li className='mb-2'>
-                            <Link onClick={() => setFlag(!flag)} to={'/shop'} className='font-normal text-[0.875em] py-[6px] px-4'>
-                                Shop
-                            </Link>
-                        </li>
-                        <li className='mb-2'>
                             <Link onClick={() => setFlag(!flag)} to={'/contact'} className='font-normal text-[0.875em] py-[6px] px-4'>
                                 Contact
                             </Link>

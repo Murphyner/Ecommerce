@@ -57,11 +57,6 @@ function Footer() {
                   </Link>
                 </li>
                 <li className='mb-3'>
-                  <Link className='font-normal text-[1em]' to={'/shop'}>
-                    Shops
-                  </Link>
-                </li>
-                <li className='mb-3'>
                   <Link className='font-normal text-[1em]' to={'/contact'}>
                     Contact
                   </Link>

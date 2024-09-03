@@ -62,11 +62,6 @@ function Header() {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to={'/shop'}>
-                                            Shop
-                                        </NavLink>
-                                    </li>
-                                    <li>
                                         <NavLink to={'/contact'}>
                                             Contact
                                         </NavLink>

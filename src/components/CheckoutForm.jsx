@@ -33,22 +33,22 @@ function CheckoutForm() {
                         <div className='w-6/12 pr-3 mb-4'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="first_name">First Name</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='First Name' name="first_name" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="first_name" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="first_name" component="div" />
                         </div>
                         <div className='w-6/12 pl-3 mb-4'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="last_name">Last Name</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='Last Name' name="last_name" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="last_name" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="last_name" component="div" />
                         </div>
                         <div className='w-full mb-4'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="phone_number">Phone Number</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='Phone Number' name="phone_number" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="phone_number" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="phone_number" component="div" />
                         </div>
                         <div className='w-full'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="email_address">Email address</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='Email address' name="email_address" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="email_address" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="email_address" component="div" />
                         </div>
                     </div>
                 </Form>

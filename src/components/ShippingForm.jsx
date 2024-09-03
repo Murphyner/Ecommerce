@@ -31,27 +31,27 @@ function ShippingForm() {
                         <div className='w-full mb-4'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="street_address">Street Address *</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='Street Address' name="street_address" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="street_address" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="street_address" component="div" />
                         </div>
                         <div className='w-full mb-4'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="country">Country *</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='Country' name="country" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="country" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="country" component="div" />
                         </div>
                         <div className='w-full mb-4'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="town">Town / City *</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='Town / City' name="town" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="town" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="town" component="div" />
                         </div>
                         <div className='w-6/12 mb-4 pr-3'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="state">State</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='State' name="state" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="state" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="state" component="div" />
                         </div>
                         <div className='w-6/12 mb-4 pl-3'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="zip_code">Zip Code</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='Zip Code' name="zip_code" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="zip_code" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="zip_code" component="div" />
                         </div>
                     </div>
                 </Form>

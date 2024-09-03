@@ -35,3 +35,19 @@
 #test-slider .slick-active a{
     border: 2px solid #DC375F;
 }
+
+.filter-drop-active{
+    padding: 8px 0;
+    height: auto;
+    visibility: visible;
+    transition: .3s;
+}
+
+.filter-drop{
+    height: 0;
+    visibility: hidden;
+}
+
+.card:hover .look {
+    right: 8px;
+}

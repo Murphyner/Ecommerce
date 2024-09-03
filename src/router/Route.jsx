@@ -6,6 +6,8 @@ import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import BasketComplete from "../pages/BasketComplete";
 import Account from "../pages/Account";
+import Contact from "../pages/Contact";
+import Products from "../pages/Products";
 
 export const route = createBrowserRouter(
     createRoutesFromElements(
@@ -17,6 +19,8 @@ export const route = createBrowserRouter(
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/complete" element={<BasketComplete />} />
                 <Route path="/account" element={<Account />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/products" element={<Products />} />
             </Route>
         </>
     )

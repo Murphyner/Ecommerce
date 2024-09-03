@@ -34,23 +34,23 @@ function AccountForm() {
                         <div className='w-full mb-4'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="firstName">First name *</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='First name' name="firstName" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="firstName" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="firstName" component="div" />
                         </div>
                         <div className='w-full mb-4'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="lastName">Last name *</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='Last name' name="lastName" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="lastName" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="lastName" component="div" />
                         </div>
                         <div className='w-full mb-4'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="displayName">Display name *</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='Display name' name="displayName" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="displayName" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="displayName" component="div" />
                             <p className='italic text-[#6C7275] text-[0.75em] font-normal mt-3'>This will be how your name will be displayed in the account section and in reviews</p>
                         </div>
                         <div className='w-full'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="accountEmail">Email *</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='Email' name="accountEmail" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="accountEmail" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="accountEmail" component="div" />
                         </div>
                     </div>
                 </Form>

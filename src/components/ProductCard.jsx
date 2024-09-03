@@ -6,10 +6,10 @@ import { FaRegStar, FaStar } from 'react-icons/fa'
 
 function ProductCard({ x }) {
     return (
-        <div className='py-2 relative'>
-            <div className='h-48 sm:h-56 md:h-72 lg:h-64 xl:h-80 relative'>
+        <div className='py-2 card relative'>
+            <div className='h-48 sm:h-56 md:h-72 lg:h-64 xl:h-72 overflow-hidden relative'>
                 <img className='w-full h-full' src={img} alt="" />
-                <ul className='absolute flex flex-col gap-2 xl:gap-4 z-10 top-[50%] translate-y-[-50%] right-2'>
+                <ul className='absolute look duration-300 flex flex-col gap-2 xl:gap-4 z-10 top-[50%] translate-y-[-50%] right-[-50px]'>
                     <li>
                         <button className='bg-white h-8 w-8 xl:h-10 xl:w-10 flex justify-center items-center rounded-[50px]'>
                             <VscHeart />

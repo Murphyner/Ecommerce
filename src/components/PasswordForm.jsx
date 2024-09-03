@@ -31,17 +31,17 @@ function PasswordForm() {
                         <div className='w-full mb-4'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="oldPass">Old password</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='Old password' name="oldPass" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="oldPass" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="oldPass" component="div" />
                         </div>
                         <div className='w-full mb-4'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="newPass">New password</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='New password' name="newPass" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="newPass" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="newPass" component="div" />
                         </div>
                         <div className='w-full'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="repPass">Repeat new password</label>
                             <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='Repeat new password' name="repPass" type="text" />
-                            <ErrorMessage className='text-red-500 pl-4 text-[12px]' name="repPass" component="div" />
+                            <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="repPass" component="div" />
                         </div>
                     </div>
                 </Form>
