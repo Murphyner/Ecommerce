@@ -51,3 +51,31 @@
 .card:hover .look {
     right: 8px;
 }
+
+#detailSlick .slick-dots{
+    position: relative !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    display: flex !important;
+}
+
+#detailSlider .slick-dots{
+    position: relative !important;
+    bottom: 0 !important;
+    left: 0 !important;
+}
+
+#detailSlider .slick-dots > li{
+    margin: 0 !important;
+}
+
+#detailSlick .slick-dots > li{
+    margin:  0 !important;
+    width: auto !important;
+    height: auto !important;
+    opacity: 0.5 !important;
+}
+
+#detailSlick .slick-dots > .slick-active {
+    opacity: 1 !important;
+}

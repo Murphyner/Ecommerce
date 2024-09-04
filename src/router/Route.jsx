@@ -8,6 +8,7 @@ import BasketComplete from "../pages/BasketComplete";
 import Account from "../pages/Account";
 import Contact from "../pages/Contact";
 import Products from "../pages/Products";
+import Detail from "../pages/Detail";
 
 export const route = createBrowserRouter(
     createRoutesFromElements(
@@ -21,6 +22,7 @@ export const route = createBrowserRouter(
                 <Route path="/account" element={<Account />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/products" element={<Products />} />
+                <Route path="/detail" element={<Detail />} />
             </Route>
         </>
     )

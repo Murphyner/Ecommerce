@@ -43,7 +43,6 @@ function Account() {
                                         <h3 className="text-[1.25em] mb-5 font-semibold text-center">Sofia Havertz</h3>
                                         <select value={num} onInput={(e) => dispatch(setNum(Number(e.target.value)))} className="block w-full lg:hidden border-[#6C7275] border-2 rounded-lg p-2 outline-none">
                                             <option value="1" className="font-semibold text-black text-[1em]">Account</option>
-                                            <option value="2" className="font-semibold text-black text-[1em]">Address</option>
                                             <option value="3" className="font-semibold text-black text-[1em]">Orders</option>
                                             <option value="4" className="font-semibold text-black text-[1em]">Wishlist</option>
                                             <option value="5" className="font-semibold text-black text-[1em]">Log Out</option>
@@ -53,9 +52,6 @@ function Account() {
                                         <ul>
                                             <li className={`py-3  ${num === 1 ? 'border-b border-[#dc375f]' : ''}`}>
                                                 <button onClick={() => dispatch(setNum(1))} className={` font-semibold text-[1em] ${ num === 1 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Account</button> 
-                                            </li>
-                                            <li className={`py-3  ${num === 2 ? 'border-b border-[#dc375f]' : ''}`}>
-                                                <button onClick={() => dispatch(setNum(2))} className={` font-semibold text-[1em] ${ num === 2 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Address</button>
                                             </li>
                                             <li className={`py-3  ${num === 3 ? 'border-b border-[#dc375f]' : ''}`}>
                                                 <button onClick={() => dispatch(setNum(3))} className={` font-semibold text-[1em] ${ num === 3 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Orders</button>

@@ -3,12 +3,14 @@ import img from '../assets/products1.jfif'
 import { VscHeart } from 'react-icons/vsc'
 import { IoEyeOutline } from 'react-icons/io5'
 import { FaRegStar, FaStar } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
 
 function ProductCard({ x }) {
+    const navigate = useNavigate()
     return (
         <div className='py-2 card relative'>
             <div className='h-48 sm:h-56 md:h-72 lg:h-64 xl:h-72 overflow-hidden relative'>
-                <img className='w-full h-full' src={img} alt="" />
+                <img className=' h-full' src={img} alt="" />
                 <ul className='absolute look duration-300 flex flex-col gap-2 xl:gap-4 z-10 top-[50%] translate-y-[-50%] right-[-50px]'>
                     <li>
                         <button className='bg-white h-8 w-8 xl:h-10 xl:w-10 flex justify-center items-center rounded-[50px]'>
@@ -16,7 +18,7 @@ function ProductCard({ x }) {
                         </button>
                     </li>
                     <li>
-                        <button className='bg-white h-8 w-8 xl:h-10 xl:w-10 flex justify-center items-center rounded-[50px]'>
+                        <button onClick={() => navigate('/detail')} className='bg-white h-8 w-8 xl:h-10 xl:w-10 flex justify-center items-center rounded-[50px]'>
                             <IoEyeOutline />
                         </button>
                     </li>

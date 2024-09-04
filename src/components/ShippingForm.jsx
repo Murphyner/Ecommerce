@@ -1,9 +1,10 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import * as Yup from 'yup';
 
-function ShippingForm() {
+function ShippingForm({formikRef2}) {
     return (
         <Formik
+            innerRef={formikRef2}
             initialValues={{
                 street_address: '',
                 country: '',

@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import * as Yup from 'yup';
 
-function BankCardForm() {
+function BankCardForm({formikRef3}) {
     const isValidExpiryDate = (value) => {
         const [month, year] = value.split('/').map(num => parseInt(num, 10));
         const now = new Date();
@@ -17,6 +17,7 @@ function BankCardForm() {
 
     return (
         <Formik
+            innerRef={formikRef3}
             initialValues={{
                 card_number: '',
                 ex_date: '',

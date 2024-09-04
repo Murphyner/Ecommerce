@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { FaCheck } from 'react-icons/fa'
 import { MdChevronLeft } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
@@ -10,6 +10,27 @@ import MobileBasketList from '../components/MobileBasketList'
 
 function Checkout() {
     const navigate = useNavigate()
+    const formikRef1 = useRef(null);
+    const formikRef2 = useRef(null);
+    const formikRef3 = useRef(null);
+
+    const handleButtonClick = async () => {
+        const formikRefs = [formikRef1, formikRef2, formikRef3];
+        let allFormsValid = true;
+
+        for (const formikRef of formikRefs) {
+            if (formikRef.current) {
+                await formikRef.current.validateForm();
+                if (!formikRef.current.isValid) {
+                    allFormsValid = false;
+                }
+            }
+        }
+
+        if (allFormsValid) {
+            navigate('/complete');
+        }
+    };
     return (
         <main>
             <div className="container 2xl:w-[1280px] mx-auto md:px-4">
@@ -47,11 +68,11 @@ function Checkout() {
                         <div className='w-full lg:w-8/12 xl:w-7/12 lg:pr-6'>
                             <div className='border border-[#6C7275] pt-6 pb-4 mb-8 px-4 rounded'>
                                 <h4 className='font-semibold mb-4 text-[1em] lg:text-[1.25em]'>Contact Infomation</h4>
-                                <CheckoutForm />
+                                <CheckoutForm formikRef1={formikRef1} />
                             </div>
                             <div className='border border-[#6C7275] pt-6 pb-4 mb-8 px-4 rounded'>
                                 <h4 className='font-semibold mb-4 text-[1em] lg:text-[1.25em]'>Shipping Address</h4>
-                                <ShippingForm />
+                                <ShippingForm formikRef2={formikRef2} />
                                 <div className='flex gap-2 items-center'>
                                     <input type="checkbox" className='border-[#F1F2F4]' />
                                     <span className='text-[#6C7275] font-normal text-[0.75em] lg:text-[1em]'>Use a different billing address (optional)</span>
@@ -74,7 +95,7 @@ function Checkout() {
                                     </button>
                                 </div>
                                 <div className='pt-4'>
-                                    <BankCardForm />
+                                    <BankCardForm formikRef3={formikRef3} />
                                 </div>
                             </div>
                         </div>
@@ -111,7 +132,7 @@ function Checkout() {
                             </div>
                         </div>
                         <div className='w-full lg:w-8/12 xl:w-7/12 lg:pr-6'>
-                            <button onClick={() => navigate('/complete')} className='block w-full bg-[#DC375F] text-white font-medium text-[1em] rounded-lg py-3'>Place Order</button>
+                            <button onClick={handleButtonClick} className='block w-full bg-[#DC375F] text-white font-medium text-[1em] rounded-lg py-3'>Place Order</button>
                         </div>
                     </div>
                 </div>
