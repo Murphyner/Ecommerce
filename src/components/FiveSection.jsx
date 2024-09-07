@@ -1,6 +1,5 @@
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import img from '../assets/banner3.jfif'
-import TrendingBtns from './TrendingBtns'
 import ReactSlick from './ReactSlick'
 import { useRef } from 'react'
 

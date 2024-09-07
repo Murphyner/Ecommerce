@@ -26,11 +26,11 @@ function Checkout() {
                 }
             }
         }
-
         if (allFormsValid) {
             navigate('/complete');
         }
     };
+    
     return (
         <main>
             <div className="container 2xl:w-[1280px] mx-auto md:px-4">
@@ -64,7 +64,7 @@ function Checkout() {
                             </div>
                         </div>
                     </div>
-                    <div className='flex pb-10 flex-wrap'>
+                    <div className='flex pb-10 lg:items-start flex-wrap relative'>
                         <div className='w-full lg:w-8/12 xl:w-7/12 lg:pr-6'>
                             <div className='border border-[#6C7275] pt-6 pb-4 mb-8 px-4 rounded'>
                                 <h4 className='font-semibold mb-4 text-[1em] lg:text-[1.25em]'>Contact Infomation</h4>
@@ -99,7 +99,7 @@ function Checkout() {
                                 </div>
                             </div>
                         </div>
-                        <div className='w-full lg:w-4/12 xl:w-5/12'>
+                        <div className='w-full lg:sticky lg:inset-0 lg:w-4/12 xl:w-5/12'>
                             <div className='border border-[#6C7275] pt-6 pb-4 mb-8 px-4 rounded'>
                                 <h4 className='font-semibold mb-4 text-[1em] lg:text-[1.25em]'>Contact Infomation</h4>
                                 <div className='mb-3'>
