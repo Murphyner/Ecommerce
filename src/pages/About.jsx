@@ -1,5 +1,5 @@
 import img from '../assets/aboutBg.png'
-import SevenSection from '../components/SevenSection'
+import SevenSection from '../components/home/SevenSection'
 import boyImg from '../assets/boyImg.png'
 import girlImg from '../assets/girlImg.png'
 

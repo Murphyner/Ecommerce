@@ -1,9 +1,9 @@
 import { nanoid } from '@reduxjs/toolkit'
 import img from '../assets/productbg.jfif'
-import ProductCard from '../components/ProductCard'
-import FilterSide from '../components/FilterSide'
+import ProductCard from '../components/static/ProductCard'
+import FilterSide from '../components/filter/FilterSide'
 import { useEffect, useState } from 'react'
-import FilterComp from '../components/FilterComp'
+import FilterComp from '../components/filter/FilterComp'
 
 function Products() {
     const [flag, setFlag] = useState(false)

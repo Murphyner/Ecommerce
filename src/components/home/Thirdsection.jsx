@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import img from '../assets/category.png'
+import img from '../../assets/category.png'
 
 function Thirdsection() {
     return (

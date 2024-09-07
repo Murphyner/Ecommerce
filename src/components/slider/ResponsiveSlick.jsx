@@ -1,7 +1,7 @@
 import { nanoid } from "@reduxjs/toolkit";
 import React from "react";
 import Slider from "react-slick";
-import ProductCard from "./ProductCard";
+import ProductCard from "../static/ProductCard";
 
 function ResponsiveSlick() {
     var settings = {

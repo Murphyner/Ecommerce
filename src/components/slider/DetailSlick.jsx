@@ -1,7 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
-import img from '../assets/products1.jfif'
-import img1 from '../assets/products2.jfif'
+import img from '../../assets/products1.jfif'
+import img1 from '../../assets/products2.jfif'
 
 const arr = [img, img1]
 

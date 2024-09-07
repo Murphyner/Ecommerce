@@ -1,4 +1,4 @@
-import img from '../assets/banner2.jfif'
+import img from '../../assets/banner2.jfif'
 
 function FourSection() {
     return (

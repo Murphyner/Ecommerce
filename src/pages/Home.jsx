@@ -1,16 +1,16 @@
 import React from 'react'
-import Herosection from '../components/Herosection'
-import Secondsection from '../components/Secondsection'
-import Thirdsection from '../components/Thirdsection'
-import FourSection from '../components/FourSection'
-import FiveSection from '../components/FiveSection'
-import SixSection from '../components/SixSection'
-import SevenSection from '../components/SevenSection'
-import Testimonials from '../components/Testimonials'
+import Herosection from '../components/home/Herosection'
+import Secondsection from '../components/home/Secondsection'
+import Thirdsection from '../components/home/Thirdsection'
+import FourSection from '../components/home/FourSection'
+import FiveSection from '../components/home/FiveSection'
+import SixSection from '../components/home/SixSection'
+import SevenSection from '../components/home/SevenSection'
+import Testimonials from '../components/home/Testimonials'
 
 function Home() {
   return (
-    <main>
+    <main className=' overflow-hidden'>
         <Herosection />
         <Secondsection />
         <Thirdsection />

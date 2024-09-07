@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaPhoneAlt, FaStore } from 'react-icons/fa'
 import { FiMail } from 'react-icons/fi'
-import ContactForm from '../components/ContactForm'
+import ContactForm from '../components/formik/ContactForm'
 
 function Contact() {
     return (

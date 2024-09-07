@@ -2,7 +2,7 @@ import { nanoid } from '@reduxjs/toolkit'
 import React from 'react'
 import { HiMiniMinusSmall, HiOutlinePlusSmall } from 'react-icons/hi2'
 import { IoMdClose } from 'react-icons/io'
-import img from '../assets/products1.jfif'
+import img from '../../assets/products1.jfif'
 
 function MobileBasketList() {
     return (

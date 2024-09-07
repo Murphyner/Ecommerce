@@ -1,6 +1,6 @@
 import React from 'react'
-import AccountForm from './AccountForm'
-import PasswordForm from './PasswordForm'
+import PasswordForm from '../formik/PasswordForm'
+import AccountForm from '../formik/AccountForm'
 
 function AccountComp() {
     return (

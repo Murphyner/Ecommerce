@@ -1,27 +1,26 @@
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
-import img from '../assets/banner1.jfif'
-import TrendingBtns from './TrendingBtns'
-import ReactSlick from './ReactSlick'
+import img from '../../assets/banner3.jfif'
+import ReactSlick from '../slider/ReactSlick'
 import { useRef } from 'react'
 
-function Secondsection() {
+function FiveSection() {
     const sliderRef = useRef(null);
 
     return (
         <section className='py-10'>
             <div className="container 2xl:w-[1280px] mx-auto md:px-4">
-                <div className="px-8 md:px-0 flex flex-wrap">
-                    <div className='w-full lg:w-6/12 mb-4 lg:pr-3 relative'>
+                <div className="px-8 md:px-0 flex items-center flex-wrap">
+                    <div className='w-full lg:w-6/12 mb-4 lg:pl-3 lg:order-1 relative'>
                         <div>
                             <img src={img} alt="" />
-                            <div className='text-white absolute inset-0 p-2 sm:p-5 z-10'>
+                            <div className='text-white absolute inset-0 p-2 sm:p-5 lg:pl-10 z-10'>
                                 <h4 className='font-medium mb-2 text-[1em] sm:text-[1.3em] md:text-[1.5em] lg:text-[1.7em]'>Women's Collection</h4>
                                 <div className='w-[50px] h-[2px] mb-2 bg-white'></div>
                                 <h6 className='font-normal text-[0.875em] sm:text-[0.925em] md:text-[1em] lg:text-[1.2em]'>Save up to 20% off</h6>
                             </div>
                         </div>
                     </div>
-                    <div className='w-full mb-4 lg:w-6/12 lg:pl-3'>
+                    <div className='w-full mb-4 lg:w-6/12 lg:pr-3'>
                         <div>
                             <div className='mb-2 relative xl:mb-5'>
                                 <button
@@ -34,12 +33,7 @@ function Secondsection() {
                                     onClick={() => sliderRef.current.slickNext()}>
                                     <FaChevronRight />
                                 </button>
-                                <h2 className='font-medium text-[1.125em] xl:mb-5 lg:text-[1.5em] mb-2 text-center'>Trending Products</h2>
-                                <div className='flex items-center justify-center gap-5'>
-                                    <TrendingBtns txt={'Featured'} />
-                                    <TrendingBtns txt={'Latest'} />
-                                    <TrendingBtns txt={'Bestseller'} />
-                                </div>
+                                <h2 className='font-medium text-[1.125em] xl:mb-5 lg:text-[1.5em] mb-2 text-center'>Special Products</h2>
                             </div>
                             <div>
                                 <ReactSlick ref={sliderRef} />
@@ -52,4 +46,4 @@ function Secondsection() {
     )
 }
 
-export default Secondsection
+export default FiveSection

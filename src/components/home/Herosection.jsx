@@ -1,4 +1,4 @@
-import bgImg from '../assets/hero.png'
+import bgImg from '../../assets/hero.png'
 
 function Herosection() {
     return (

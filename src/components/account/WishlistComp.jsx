@@ -1,6 +1,6 @@
 import { nanoid } from '@reduxjs/toolkit'
 import React from 'react'
-import img from '../assets/products1.jfif'
+import img from '../../assets/products1.jfif'
 import { IoMdClose } from 'react-icons/io'
 
 function WishlistComp() {

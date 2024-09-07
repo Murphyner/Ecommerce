@@ -1,5 +1,5 @@
 import { nanoid } from '@reduxjs/toolkit'
-import img from '../assets/products1.jfif'
+import img from '../../assets/products1.jfif'
 import BasketSummary from './BasketSummary'
 import { HiMiniMinusSmall, HiOutlinePlusSmall } from 'react-icons/hi2'
 import { IoMdClose } from 'react-icons/io'

@@ -1,7 +1,7 @@
 import { nanoid } from '@reduxjs/toolkit'
 import React, { useState } from 'react'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
-import InputRange from './InputRange'
+import InputRange from '../slider/InputRange'
 
 function FilterComp() {
     const [drop1, setDrop1] = useState(true)

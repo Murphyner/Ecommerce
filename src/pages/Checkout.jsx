@@ -2,11 +2,11 @@ import React, { useRef } from 'react'
 import { FaCheck } from 'react-icons/fa'
 import { MdChevronLeft } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
-import CheckoutForm from '../components/CheckoutForm'
-import ShippingForm from '../components/ShippingForm'
+import CheckoutForm from '../components/cart/CheckoutForm'
+import ShippingForm from '../components/formik/ShippingForm'
 import { IoIosRadioButtonOff, IoIosRadioButtonOn } from 'react-icons/io'
-import BankCardForm from '../components/BankCardForm'
-import MobileBasketList from '../components/MobileBasketList'
+import BankCardForm from '../components/formik/BankCardForm'
+import MobileBasketList from '../components/cart/MobileBasketList'
 
 function Checkout() {
     const navigate = useNavigate()

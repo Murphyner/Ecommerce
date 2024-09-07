@@ -2,11 +2,11 @@ import { MdChevronLeft } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
 import img from "../assets/avatar.jfif"
 import { CiCamera } from "react-icons/ci"
-import AccountComp from "../components/AccountComp"
-import OrdersComp from "../components/OrdersComp"
+import AccountComp from "../components/account/AccountComp"
+import OrdersComp from "../components/account/OrdersComp"
 import { useDispatch, useSelector } from "react-redux"
 import { setNum } from "../store/NumSlice"
-import WishlistComp from "../components/WishlistComp"
+import WishlistComp from "../components/account/WishlistComp"
 
 function Account() {
     const navigate = useNavigate()

@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import Slider from "react-slick";
-import ProductCard from "./ProductCard";
+import ProductCard from "../static/ProductCard";
 
 const ReactSlick = forwardRef((props, ref) => {
     const settings = {

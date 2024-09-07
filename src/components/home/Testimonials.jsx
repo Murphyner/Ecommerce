@@ -1,7 +1,7 @@
-import img1 from '../assets/test1.png'
-import img2 from '../assets/test2.png'
-import img3 from '../assets/test3.png'
-import CustomPaging from './CustomPaging'
+import img1 from '../../assets/test1.png'
+import img2 from '../../assets/test2.png'
+import img3 from '../../assets/test3.png'
+import CustomPaging from '../slider/CustomPaging'
 
 function Testimonials() {
     const data = [

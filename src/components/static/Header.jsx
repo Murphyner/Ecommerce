@@ -7,7 +7,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Sidemenu from './Sidemenu'
 import { AiOutlineUser } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
-import { setNum } from '../store/NumSlice'
+import { setNum } from '../../store/NumSlice'
 
 function Header() {
     const [flag, setFlag] = useState(false)

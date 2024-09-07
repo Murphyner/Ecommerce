@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
-import DetailSlick from "../components/DetailSlick"
+import DetailSlick from "../components/slider/DetailSlick"
 import { FaCheck, FaFacebookF, FaPinterest, FaRegStar, FaStar, FaTwitter } from "react-icons/fa"
 import { FiMinus, FiPlus } from "react-icons/fi"
 import { CiHeart } from "react-icons/ci"
 import img from "../assets/1.jfif"
-import ResponsiveSlick from "../components/ResponsiveSlick"
+import ResponsiveSlick from "../components/slider/ResponsiveSlick"
 
 function Detail() {
     return (

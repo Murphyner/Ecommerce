@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { MdChevronLeft } from 'react-icons/md'
-import BasketMobile from '../components/BasketMobile'
+import BasketMobile from '../components/cart/BasketMobile'
 import { useNavigate } from 'react-router-dom'
-import BasketDesktop from '../components/BasketDesktop'
+import BasketDesktop from '../components/cart/BasketDesktop'
 
 function Cart() {
     const navigate = useNavigate()
