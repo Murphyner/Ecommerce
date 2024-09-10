@@ -9,6 +9,11 @@ import Account from "../pages/Account";
 import Contact from "../pages/Contact";
 import Products from "../pages/Products";
 import Detail from "../pages/Detail";
+import Auth from "../components/auth/Auth";
+import AdminLayout from "../layout/AdminLayout";
+import AdminProducts from "../pages/admin/AdminProducts";
+import AdminCategory from "../pages/admin/AdminCategory";
+import AdminBrands from "../pages/admin/AdminBrands";
 
 export const route = createBrowserRouter(
     createRoutesFromElements(
@@ -23,6 +28,15 @@ export const route = createBrowserRouter(
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/detail" element={<Detail />} />
+            </Route>
+            <Route path="/admin" element={
+                <Auth>
+                    <AdminLayout />
+                </Auth>
+            }>
+                <Route path="/admin" index element={<AdminProducts />} />
+                <Route path="category" element={<AdminCategory />} />
+                <Route path="brands" element={<AdminBrands />} />
             </Route>
         </>
     )
