@@ -11,15 +11,13 @@ function LoginpageForm() {
     const [loginUser, { data, isError }] = useLoginUserMutation()
     const navigate = useNavigate()
 
-    // useEffect(() => {
-    //     if (data && data.token) {
-    //         localStorage.setItem("token", data.token)
-    //         localStorage.setItem("token", data.token)
-    //         navigate("/admin")
-    //         window.location.reload()
-    //         console.log(data)
-    //     }
-    // }, [data])
+    useEffect(() => {
+        if (data && data.user.role === "ADMIN") {
+            localStorage.setItem("token", data.token)
+            navigate("/admin")
+            window.location.reload()
+        }
+    }, [data])
 
     useEffect(() => {
         if (isError) {
@@ -29,9 +27,6 @@ function LoginpageForm() {
 
     function handleSubmit(obj) {
         loginUser(obj)
-        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjMsImlhdCI6MTcyNTc5MjkxMywiZXhwIjozNjAxNzI1Nzg5MzEzfQ.h4DLhWPdbaTHkc_U_cSvv3gDSbOKVImfnfsEq3ht5Z8")
-        navigate("/admin")
-        window.location.reload()
     }
 
     return (

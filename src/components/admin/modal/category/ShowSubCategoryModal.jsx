@@ -3,8 +3,9 @@ import { IoClose } from 'react-icons/io5'
 import { setSubCategoryModalFlag, setSubName, setSubSlug } from '../../../../store/CategoryModalSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import SubCategoryList from '../../SubCategoryList'
-import { useAddSubCategoryMutation } from '../../../../store/api'
+import { useAddSubCategoryMutation, useGetCategoryByIdQuery } from '../../../../store/api'
 import { toast, ToastContainer } from 'react-toastify'
+import { nanoid } from '@reduxjs/toolkit'
 
 function ShowSubCategoryModal() {
     const dispatch = useDispatch()
@@ -12,11 +13,15 @@ function ShowSubCategoryModal() {
 
     const [addSubCategory, { data, isError, isLoading, isSuccess, status }] = useAddSubCategoryMutation()
 
+    const { data: res, refetch } = useGetCategoryByIdQuery(idCat)
+
     useEffect(() => {
         if (isSuccess) {
-            toast.success("uğurla əlavə olundu!!")
+            toast.success("uğurla əlavə olundu!!", {
+                autoClose: 500,
+                onClose: () => refetch()
+            })
         }
-
         if (isError) {
             toast.error("Error!")
         }
@@ -33,7 +38,7 @@ function ShowSubCategoryModal() {
             addSubCategory(data)
             dispatch(setSubName(''))
             dispatch(setSubSlug(''))
-        }else{
+        } else {
             toast.info("İnputlar Boşdur!!")
         }
     }
@@ -56,7 +61,9 @@ function ShowSubCategoryModal() {
                             <span className='text-left w-[25%] text-sm font-medium uppercase text-gray-400'>Slug name</span>
                             <span className='text-left w-[35%] text-sm font-medium uppercase text-gray-400'>Actions</span>
                         </li>
-                        <SubCategoryList />
+                        {res?.Subcategory.map((item, i) => (
+                            <SubCategoryList key={nanoid()} refetch={refetch} item={item} i={i} />
+                        ))}
                     </ul>
                 </div>
                 <div className="p-6 pt-0">

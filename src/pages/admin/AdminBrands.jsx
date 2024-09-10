@@ -16,7 +16,7 @@ function AdminBrands() {
     const {data, isLoading} = useAllBrandQuery()
 
     return (
-        <div className='py-5'>
+        <div className={`${isLoading ? "h-screen" : "py-5"}`}>
             {addBrandFlag && <AddBrandModal />}
             {deleteBrandFlag && <DeleteBrandModal />}
             {editBrandFlag && <EditBrandModal />}

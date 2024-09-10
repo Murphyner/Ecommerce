@@ -16,7 +16,7 @@ function AdminCategory() {
     const { data , isLoading } = useAllCategoryQuery()
 
     return (
-        <div className='py-5'>
+        <div className={`${isLoading ? "h-screen" : "py-5"}`}>
             {subCategoryModalFlag && <ShowSubCategoryModal />}
             {addCategoryFlag && <AddCategoryModal />}
             {deleteCategoryFlag && <DeleteCategoryModal />}

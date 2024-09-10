@@ -67,14 +67,14 @@ function Sidemenu() {
                     </NavLink>
                 </li>
                 <li className='mb-3'>
-                    <NavLink className='flex w-full items-center rounded-lg p-2 text-base font-normal transition duration-75 text-gray-200 hover:bg-gray-700'>
+                    <button className='flex gap-2 w-full items-center rounded-lg p-2 text-base font-normal transition duration-75 text-gray-200 hover:bg-gray-700'>
                         <svg
                             stroke="currentColor"
                             fill="currentColor"
                             strokeWidth={0}
                             viewBox="0 0 20 20"
                             aria-hidden="true"
-                            className="mx-auto mb-1 h-7 w-7 text-gray-500 dark:text-gray-400"
+                            className="h-7 w-7 text-gray-400"
                             height="14px"
                             width="14px"
                             xmlns="http://www.w3.org/2000/svg"
@@ -85,8 +85,8 @@ function Sidemenu() {
                                 clipRule="evenodd"
                             />
                         </svg>
-                        <span className='flex-1 whitespace-nowrap px-3'>Log Out</span>
-                    </NavLink>
+                        <span className=' whitespace-nowrap'>Log Out</span>
+                    </button>
                 </li>
             </ul>
         </div>

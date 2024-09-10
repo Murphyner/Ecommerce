@@ -57,6 +57,27 @@ export const api = createApi({
                 body: data
             })
         }),
+        editSubCategory : builder.mutation({
+            query : ({id, obj}) => ({
+                url : `/categories/subcategory/update/${id}`,
+                method : "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: obj
+            })
+        }),
+        deleteSubCategory : builder.mutation({
+            query : (id) => ({
+                url : `/categories/subcategory/delete/${id}`,
+                method : "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+        }),
         getCategoryById: builder.query({
             query: (id) => ({
                 url: `/categories/get/${id}`
@@ -135,5 +156,7 @@ export const {
     useAllBrandQuery,
     useDeleteBrandMutation,
     useGetBrandByIdQuery,
-    useEditBrandMutation
+    useEditBrandMutation,
+    useEditSubCategoryMutation,
+    useDeleteSubCategoryMutation
 } = api;
