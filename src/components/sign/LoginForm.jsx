@@ -1,28 +1,24 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik'
-import { useEffect, useState } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useEffect, useState } from "react"
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
 import * as Yup from 'yup';
-import { useLoginUserMutation } from '../../../store/api';
-import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { useLoginUserMutation } from "../../store/api";
+import { useNavigate } from "react-router-dom";
 
-function LoginpageForm() {
+function LoginForm({ setChange }) {
     const [flag, setFlag] = useState(false)
+
     const [loginUser, { data, isError }] = useLoginUserMutation()
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (data) {
-            if (data.user.role === "ADMIN") {
-                localStorage.clear()
-                localStorage.setItem("token", data.token)
-                localStorage.setItem("user", JSON.stringify(data.user))
-                navigate("/admin")
-                window.location.reload()
-                console.log(data)
-            } else {
-                toast.info("Siz admin deyilsiniz!")
-            }
+        if (data && data.token) {
+            localStorage.clear()
+            localStorage.setItem("token", data.token)
+            localStorage.setItem("user", JSON.stringify(data.user))
+            navigate("/account")
+            window.location.reload()
         }
     }, [data])
 
@@ -73,8 +69,11 @@ function LoginpageForm() {
                             <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="password" component="div" />
                         </div>
                         <div className='w-full'>
-                            <button type='submit' className='block w-full py-3 rounded-md font-medium text-white bg-gray-700'>Login</button>
+                            <button type='submit' className='block w-full py-3 rounded-md font-medium text-white bg-[#DC375F]'>Login</button>
                         </div>
+                        <p className="text-sm w-full text-center pt-1 text-gray-600">Don't have an account yet?
+                            <button type="button" onClick={() => setChange(false)} className="hover:underline text-blue-600">Sign up</button>.
+                        </p>
                     </div>
                 </Form>
             )}
@@ -82,4 +81,4 @@ function LoginpageForm() {
     )
 }
 
-export default LoginpageForm
+export default LoginForm

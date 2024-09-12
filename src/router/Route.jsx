@@ -14,6 +14,7 @@ import AdminLayout from "../layout/AdminLayout";
 import AdminProducts from "../pages/admin/AdminProducts";
 import AdminCategory from "../pages/admin/AdminCategory";
 import AdminBrands from "../pages/admin/AdminBrands";
+import AccountAuth from "../components/auth/AccountAuth";
 
 export const route = createBrowserRouter(
     createRoutesFromElements(
@@ -24,7 +25,11 @@ export const route = createBrowserRouter(
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/complete" element={<BasketComplete />} />
-                <Route path="/account" element={<Account />} />
+                <Route path="/account" element={
+                    <AccountAuth>
+                        <Account />
+                    </AccountAuth>
+                } />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/detail" element={<Detail />} />

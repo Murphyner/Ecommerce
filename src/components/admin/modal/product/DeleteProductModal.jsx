@@ -1,11 +1,38 @@
 import { IoClose } from "react-icons/io5"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { setDeleteProductFlag } from "../../../../store/ProductModalSlice"
+import { useDeleteProductMutation } from "../../../../store/api"
+import { useEffect } from "react"
+import { toast, ToastContainer } from "react-toastify"
 
 function DeleteProductModal() {
     const dispatch = useDispatch()
+
+    const {categoryId} =  useSelector((state) => state.addProduct)
+
+    const [deleteProduct, {isSuccess, isError}] = useDeleteProductMutation()
+
+    function handleDeleteProduct(){
+        deleteProduct(categoryId)
+    }
+
+    useEffect(() => {
+        if(isSuccess){
+            toast.success("Uğurlu əməliyyat!", {
+                autoClose: 500,
+                onClose: () => dispatch(setDeleteProductFlag(false))
+            })
+        }
+
+        if(isError){
+            toast.error("Error")
+        }
+
+    }, [isSuccess, isError])
+
     return (
         <div className="fixed inset-0 bg-[#00000080] flex items-center justify-center z-[999]">
+            <ToastContainer />
             <div className="max-h-[90dvh] bg-gray-800 rounded-lg max-w-md w-full">
                 <div className="p-5 flex items-center justify-end">
                     <button onClick={() => dispatch(setDeleteProductFlag(false))} className="text-[1.5em] hover:bg-gray-700 text-gray-400 hover:text-white">
@@ -36,7 +63,7 @@ function DeleteProductModal() {
                         <p className="text-xl font-normal text-center text-gray-400">Are you sure you want to delete this product?</p>
                     </div>
                     <div className="py-5 flex justify-center gap-3">
-                        <button className="border font-medium text-base px-4 py-2 border-transparent text-white bg-red-600 rounded-lg">
+                        <button onClick={handleDeleteProduct} className="border font-medium text-base px-4 py-2 border-transparent text-white bg-red-600 rounded-lg">
                             Yes, I'm sure
                         </button>
                         <button onClick={() => dispatch(setDeleteProductFlag(false))} className="px-4 py-2 font-medium text-base border border-gray-600 hover:bg-gray-700 hover:text-white duration-300 bg-transparent text-gray-400 rounded-lg">

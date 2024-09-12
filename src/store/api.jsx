@@ -5,12 +5,22 @@ const token = localStorage.getItem("token")
 export const api = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({ baseUrl: "https://ecommerse.davidhtml.xyz/" }),
-    tagTypes: ['Category', 'Brand'],
+    tagTypes: ['Category', 'Brand', 'Product'],
     endpoints: (builder) => ({
         loginUser: builder.mutation({
             query: (obj) => ({
                 url: `/login`,
                 method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: obj
+            })
+        }),
+        registerUser : builder.mutation({
+            query : (obj) => ({
+                url : `/register`,
+                method : "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -57,10 +67,10 @@ export const api = createApi({
                 body: data
             })
         }),
-        editSubCategory : builder.mutation({
-            query : ({id, obj}) => ({
-                url : `/categories/subcategory/update/${id}`,
-                method : "PUT",
+        editSubCategory: builder.mutation({
+            query: ({ id, obj }) => ({
+                url: `/categories/subcategory/update/${id}`,
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
@@ -68,10 +78,10 @@ export const api = createApi({
                 body: obj
             })
         }),
-        deleteSubCategory : builder.mutation({
-            query : (id) => ({
-                url : `/categories/subcategory/delete/${id}`,
-                method : "DELETE",
+        deleteSubCategory: builder.mutation({
+            query: (id) => ({
+                url: `/categories/subcategory/delete/${id}`,
+                method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
@@ -124,9 +134,9 @@ export const api = createApi({
             }),
             invalidatesTags: ['Brand']
         }),
-        getBrandById : builder.query({
-            query : (id) => ({
-                url : `/brands/get/${id}`
+        getBrandById: builder.query({
+            query: (id) => ({
+                url: `/brands/get/${id}`
             })
         }),
         editBrand: builder.mutation({
@@ -141,11 +151,56 @@ export const api = createApi({
             }),
             invalidatesTags: ['Brand'],
         }),
+        uploadFile: builder.mutation({
+            query: (obj) => ({
+                url: `/img/upload`,
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                },
+                body: obj
+            })
+        }),
+        addProduct: builder.mutation({
+            query: (obj) => ({
+                url: `/products/create`,
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: obj
+            }),
+            invalidatesTags: ['Product']
+        }),
+        allProduct : builder.query({
+            query : () => ({
+                url : `/products/all`
+            }),
+            providesTags: ['Product']
+        }),
+        deleteProduct : builder.mutation({
+            query : (id) => ({
+                url : `/products/delete/${id}`,
+                method : "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+            }),
+            invalidatesTags: ['Product']
+        }),
+        getProductById : builder.query({
+            query : (id) => ({
+                url : `/products/get/${id}`
+            })
+        })
     })
 })
 
 export const {
     useLoginUserMutation,
+    useRegisterUserMutation,
     useAddCategoryMutation,
     useAllCategoryQuery,
     useDeleteCategoryMutation,
@@ -158,5 +213,10 @@ export const {
     useGetBrandByIdQuery,
     useEditBrandMutation,
     useEditSubCategoryMutation,
-    useDeleteSubCategoryMutation
+    useDeleteSubCategoryMutation,
+    useUploadFileMutation,
+    useAddProductMutation,
+    useAllProductQuery,
+    useDeleteProductMutation,
+    useGetProductByIdQuery
 } = api;

@@ -4,7 +4,8 @@ export const ProductModalSlice = createSlice({
     name : "productModal",
     initialState : {
         addProductFlag : false,
-        deleteProductFlag : false
+        deleteProductFlag : false,
+        editProductFlag : false
     },
     reducers : {
         setAddProductFlag : (state, action) => {
@@ -12,9 +13,12 @@ export const ProductModalSlice = createSlice({
         },
         setDeleteProductFlag : (state, action) => {
             state.deleteProductFlag = action.payload
+        },
+        setEditProductFlag : (state, action) => {
+            state.editProductFlag = action.payload
         }
     }
 })
 
-export const {setAddProductFlag, setDeleteProductFlag} = ProductModalSlice.actions
+export const {setAddProductFlag, setDeleteProductFlag, setEditProductFlag} = ProductModalSlice.actions
 export default ProductModalSlice.reducer

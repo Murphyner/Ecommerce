@@ -36,7 +36,6 @@ function SubCategoryList({ item, i, refetch }) {
                 onClose: () => refetch()
             })
         }
-
         if(err){
             toast.error("Error")
         }
@@ -77,10 +76,10 @@ function SubCategoryList({ item, i, refetch }) {
                         </button>
                     ) : (
                         <div className='flex w-6/12 rounded-lg overflow-hidden'>
-                            <button onClick={() => setFlagDel(true)} className='w-6/12 flex justify-center px-2 py-3 text-white bg-red-600'>
+                            <button onClick={() => setFlagDel(true)} className='w-6/12 flex justify-center px-3 py-[11.4px] text-white bg-red-600'>
                                 <FaXmark />
                             </button>
-                            <button onClick={handleDelete} className='w-6/12 flex justify-center px-2 py-3 text-white bg-green-500'>
+                            <button onClick={handleDelete} className='w-6/12 flex justify-center px-3 py-[11.4px] text-white bg-green-500'>
                                 <FaCheck />
                             </button>
                         </div>

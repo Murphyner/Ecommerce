@@ -1,21 +1,41 @@
 import { MdChevronLeft } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
-import img from "../assets/avatar.jfif"
 import { CiCamera } from "react-icons/ci"
 import AccountComp from "../components/account/AccountComp"
 import OrdersComp from "../components/account/OrdersComp"
 import { useDispatch, useSelector } from "react-redux"
 import { setNum } from "../store/NumSlice"
 import WishlistComp from "../components/account/WishlistComp"
+import LogoutComp from "../components/account/LogoutComp"
+import { useEffect, useState } from "react"
+import { setArr } from "../store/AccountSlice"
 
 function Account() {
     const navigate = useNavigate()
+    const [flag, setFlag] = useState(false)
 
     const {num} = useSelector(state => state.number)
     const dispatch = useDispatch()
+
+    const {arr} = useSelector(state => state.accountSlice)
+
+    
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"))
+        if(user){
+            dispatch(setArr(user))
+        }
+    }, [])
+
+    useEffect(() => {
+        if(num === 5){
+            setFlag(true)
+        }
+    }, [num])
     
     return (
         <main>
+            {flag && <LogoutComp setFlag={setFlag} />}
             <div className="container 2xl:w-[1280px] mx-auto md:px-4">
                 <div className='px-8 md:px-0'>
                     <div className="pb-5">
@@ -34,14 +54,14 @@ function Account() {
                                     <div className="flex flex-col items-center justify-center">
                                         <div className="relative mb-2">
                                             <div className="w-20 h-20 rounded-[50%] overflow-hidden">
-                                                <img src={img} alt="" className="w-full h-full object-cover" />
+                                                <img src={arr?.user_img} alt="" className="w-full h-full object-cover" />
                                                 <span className="w-7 h-7 flex justify-center items-center absolute z-10 bottom-[-5px] right-[-5px] rounded-[50px] bg-[#FE5196] text-white border-[1.5px] border-white">
                                                     <CiCamera />
                                                 </span>
                                             </div>
                                         </div>
-                                        <h3 className="text-[1.25em] mb-5 font-semibold text-center">Sofia Havertz</h3>
-                                        <select value={num} onInput={(e) => dispatch(setNum(Number(e.target.value)))} className="block w-full lg:hidden border-[#6C7275] border-2 rounded-lg p-2 outline-none">
+                                        <h3 className="text-[1.25em] mb-5 font-semibold text-center">{arr.username}</h3>
+                                        <select value={num} onChange={(e) => dispatch(setNum(Number(e.target.value)))} className="block w-full lg:hidden border-[#6C7275] border-2 rounded-lg p-2 outline-none">
                                             <option value="1" className="font-semibold text-black text-[1em]">Account</option>
                                             <option value="3" className="font-semibold text-black text-[1em]">Orders</option>
                                             <option value="4" className="font-semibold text-black text-[1em]">Wishlist</option>
@@ -59,15 +79,15 @@ function Account() {
                                             <li className={`py-3  ${num === 4 ? 'border-b border-[#dc375f]' : ''}`}>
                                                 <button onClick={() => dispatch(setNum(4))} className={` font-semibold text-[1em] ${ num === 4 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Wishlist</button>
                                             </li>
-                                            <li className={`py-3  ${num === 5 ? 'border-b border-[#dc375f]' : ''}`}>
-                                                <button onClick={() => dispatch(setNum(5))} className={` font-semibold text-[1em] ${ num === 5 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Log Out</button>
+                                            <li className={`py-3 `}>
+                                                <button onClick={() => setFlag(true)} className={` font-semibold text-[1em] text-[#6C7275]`}>Log Out</button>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                             <div className="w-full lg:w-8/12 xl:w-9/12 lg:pl-8">
-                                {num === 1 ? <AccountComp /> : num === 4 ? <WishlistComp /> : <OrdersComp />}
+                                {num === 1 ? <AccountComp /> : num === 4 ? <WishlistComp /> : num === 3 ? <OrdersComp /> : ''}
                             </div>
                         </div>
                     </div>

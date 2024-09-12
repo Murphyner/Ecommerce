@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import LogoutModal from './modal/logout/LogoutModal'
 
 function Sidemenu() {
+    const [flag, setFlag] = useState(false)
+
     return (
         <div className='p-4'>
+            {flag && <LogoutModal flag={flag} setFlag={setFlag} />}
             <ul>
                 <li className='mb-3'>
                     <NavLink to={'/admin'} className='flex w-full items-center rounded-lg p-2 text-base font-normal transition duration-75 text-gray-200 hover:bg-gray-700'>
@@ -67,7 +71,7 @@ function Sidemenu() {
                     </NavLink>
                 </li>
                 <li className='mb-3'>
-                    <button className='flex gap-2 w-full items-center rounded-lg p-2 text-base font-normal transition duration-75 text-gray-200 hover:bg-gray-700'>
+                    <button onClick={() => setFlag(true)} className='flex gap-2 w-full items-center rounded-lg p-2 text-base font-normal transition duration-75 text-gray-200 hover:bg-gray-700'>
                         <svg
                             stroke="currentColor"
                             fill="currentColor"
