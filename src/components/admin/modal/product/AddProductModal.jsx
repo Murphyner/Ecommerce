@@ -6,7 +6,7 @@ import { FaRegImage } from "react-icons/fa"
 import { eColors, eSize } from "../../../../enum/Enum"
 import { useAddProductMutation, useAllBrandQuery, useAllCategoryQuery, useGetCategoryByIdQuery, useUploadFileMutation } from "../../../../store/api"
 import { useEffect } from "react"
-import { setFlag, setProductBrandId, setProductCatId, setProductColors, setProductDescription, setProductDiscount, setProductImages, setProductName, setProductPrice, setProductSize, setProductSubCatId } from "../../../../store/AddProductSlice"
+import { deleteProductColors, deleteProductSize, setFlag, setProductBrandId, setProductCatId, setProductColors, setProductDescription, setProductDiscount, setProductImages, setProductName, setProductPrice, setProductSize, setProductSubCatId } from "../../../../store/AddProductSlice"
 import { toast, ToastContainer } from "react-toastify"
 
 function AddProductModal() {
@@ -18,7 +18,7 @@ function AddProductModal() {
     const { name, description, discount, price, images, flag, categoryId, subcategoryId, brandsId, colors, size } = useSelector((state) => state.addProduct)
 
 
-    const [addProduct, {isSuccess : addSuccess, data : res, isError : addError}] = useAddProductMutation()
+    const [addProduct, { isSuccess: addSuccess, data: res, isError: addError }] = useAddProductMutation()
 
     const { data: byCategory, isLoading: byCatLoad } = useGetCategoryByIdQuery(categoryId, { skip: categoryId.length === 0 });
 
@@ -26,6 +26,8 @@ function AddProductModal() {
     const { data: categories, isLoading: categoryLoad } = useAllCategoryQuery()
 
     const [uploadFile, { data: response, isSuccess: uploadSuccess }] = useUploadFileMutation()
+
+    console.log(size)
 
     function handleUploadImage(e) {
         const file = e.target.files[0]
@@ -61,6 +63,16 @@ function AddProductModal() {
     useEffect(() => {
         if (addSuccess) {
             toast.success("Uğurla əlavə olundu!!")
+            dispatch(setProductBrandId(''))
+            dispatch(setProductCatId(''))
+            dispatch(setProductColors([]))
+            dispatch(setProductDescription(''))
+            dispatch(setProductDiscount(''))
+            dispatch(setProductImages([]))
+            dispatch(setProductName(''))
+            dispatch(setProductPrice(''))
+            dispatch(setProductSize([]))
+            dispatch(setProductSubCatId(''))
         }
 
         if (addError) {
@@ -71,7 +83,7 @@ function AddProductModal() {
     useEffect(() => {
         if (uploadSuccess) {
             toast.success("Şəkil uğurla əlavə olundu!", {
-                autoClose : 300
+                autoClose: 300
             })
         }
     }, [uploadSuccess])
@@ -142,22 +154,27 @@ function AddProductModal() {
                             </select>
                         </div>
                         <div className='w-6/12 mb-3 pr-3'>
-                            <label htmlFor="" className='text-white font-medium mb-2 text-sm block'>Color</label>
-                            <select onChange={(e) => dispatch(setProductColors(e.target.value))} value={colors} className='block w-full border outline-none border-gray-600 bg-gray-700 text-gray-400 p-2.5 text-sm rounded-lg'>
-                                <option value="">Choose color</option>
+                            <p className='text-white font-medium mb-2 text-sm block'>Colors</p>
+                            <div className="flex border p-2 h-[100px] border-gray-600 rounded-lg flex-wrap gap-2 items-center">
                                 {rengler.map((item, i) => (
-                                    <option value={item} key={i}>{item}</option>
+                                    <div className="flex gap-1 items-center" key={i}>
+                                        <input onChange={(e) => e.target.checked ? dispatch(setProductColors(e.target.value)) : dispatch(deleteProductColors(e.target.value))} type="checkbox" value={item} name={item} />
+                                        <label className="text-white text-sm" htmlFor={item}>{item}</label>
+                                    </div>
                                 ))}
-                            </select>
+                            </div>
                         </div>
+
                         <div className='w-6/12 mb-3 pl-3'>
-                            <label htmlFor="" className='text-white font-medium mb-2 text-sm block'>Size</label>
-                            <select onChange={(e) => dispatch(setProductSize(e.target.value))} value={size} className='block w-full border outline-none border-gray-600 bg-gray-700 text-gray-400 p-2.5 text-sm rounded-lg'>
-                                <option value="">Choose size</option>
+                            <p className='text-white font-medium mb-2 text-sm block'>Size</p>
+                            <div className="flex flex-col border p-2 border-gray-600 h-[100px] rounded-lg flex-wrap gap-2 ">
                                 {olculer.map((item, i) => (
-                                    <option value={item} key={i}>{item}</option>
+                                    <div className="flex gap-1 items-center" key={i}>
+                                        <input onChange={(e) => e.target.checked ? dispatch(setProductSize(e.target.value)) : dispatch(deleteProductSize(e.target.value))} type="checkbox" value={item} name={item} />
+                                        <label className="text-white text-sm" htmlFor={item}>{item}</label>
+                                    </div>
                                 ))}
-                            </select>
+                            </div>
                         </div>
                         <div className='w-full mb-3'>
                             <label htmlFor="" className='text-white font-medium mb-2 text-sm block'>Description</label>

@@ -194,6 +194,18 @@ export const api = createApi({
             query : (id) => ({
                 url : `/products/get/${id}`
             })
+        }),
+        editProduct : builder.mutation({
+            query : ({id, obj}) => ({
+                url : `/products/update/${id}`,
+                method : "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body : obj
+            }),
+            invalidatesTags: ['Product']
         })
     })
 })
@@ -218,5 +230,6 @@ export const {
     useAddProductMutation,
     useAllProductQuery,
     useDeleteProductMutation,
-    useGetProductByIdQuery
+    useGetProductByIdQuery,
+    useEditProductMutation
 } = api;

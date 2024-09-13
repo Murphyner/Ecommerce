@@ -11,8 +11,8 @@ export const AddProductSlice = createSlice({
         categoryId: '',
         subcategoryId: '',
         brandsId: '',
-        colors: '',
-        size: '',
+        colors: [],
+        size: [],
         flag : true,
         id : ''
     },
@@ -42,10 +42,16 @@ export const AddProductSlice = createSlice({
             state.brandsId = action.payload
         },
         setProductColors : (state, action) => {
-            state.colors = action.payload
+            state.colors = [...state.colors, action.payload]
+        },
+        deleteProductColors : (state, action) => {
+            state.colors = state.colors.filter(item => item !== action.payload)
         },
         setProductSize : (state, action) => {
-            state.size = action.payload
+            state.size = [...state.size, action.payload]
+        },
+        deleteProductSize : (state, action) => {
+            state.size = state.size.filter(item => item !== action.payload)
         },
         setFlag : (state, action) => {
             state.flag = action.payload
@@ -61,12 +67,14 @@ export const {
     setProductBrandId,
     setProductCatId,
     setProductColors,
+    deleteProductColors,
     setProductDescription,
     setProductDiscount,
     setProductImages,
     setProductName,
     setProductPrice,
     setProductSize,
+    deleteProductSize,
     setProductSubCatId,
     setFlag,
     setId

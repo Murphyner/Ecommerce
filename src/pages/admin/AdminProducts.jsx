@@ -41,7 +41,7 @@ function AdminProducts() {
                         <span className='text-left w-[20%] text-sm font-medium uppercase text-gray-400'>Actions</span>
                     </li>
                     {!isLoading &&
-                        data.data.map((item, i) => (
+                        data?.data.map((item, i) => (
                             <AdminProductList item={item} key={nanoid()} i={i} />
                         ))
                     }
