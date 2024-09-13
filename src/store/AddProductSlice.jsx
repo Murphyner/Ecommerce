@@ -32,6 +32,9 @@ export const AddProductSlice = createSlice({
         setProductImages : (state, action) => {
             state.images = [...state.images, action.payload]
         },
+        resetProductImages : (state, action) => {
+            state.images = action.payload
+        },
         setProductCatId : (state, action) => {
             state.categoryId = action.payload
         },
@@ -76,6 +79,7 @@ export const {
     setProductSize,
     deleteProductSize,
     setProductSubCatId,
+    resetProductImages,
     setFlag,
     setId
 } = AddProductSlice.actions

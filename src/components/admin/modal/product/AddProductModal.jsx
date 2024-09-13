@@ -6,8 +6,9 @@ import { FaRegImage } from "react-icons/fa"
 import { eColors, eSize } from "../../../../enum/Enum"
 import { useAddProductMutation, useAllBrandQuery, useAllCategoryQuery, useGetCategoryByIdQuery, useUploadFileMutation } from "../../../../store/api"
 import { useEffect } from "react"
-import { deleteProductColors, deleteProductSize, setFlag, setProductBrandId, setProductCatId, setProductColors, setProductDescription, setProductDiscount, setProductImages, setProductName, setProductPrice, setProductSize, setProductSubCatId } from "../../../../store/AddProductSlice"
+import { deleteProductColors, deleteProductSize, resetProductImages, setFlag, setProductBrandId, setProductCatId, setProductColors, setProductDescription, setProductDiscount, setProductImages, setProductName, setProductPrice, setProductSize, setProductSubCatId } from "../../../../store/AddProductSlice"
 import { toast, ToastContainer } from "react-toastify"
+import { FiMinus } from "react-icons/fi"
 
 function AddProductModal() {
     const rengler = eColors
@@ -26,8 +27,6 @@ function AddProductModal() {
     const { data: categories, isLoading: categoryLoad } = useAllCategoryQuery()
 
     const [uploadFile, { data: response, isSuccess: uploadSuccess }] = useUploadFileMutation()
-
-    console.log(size)
 
     function handleUploadImage(e) {
         const file = e.target.files[0]
@@ -62,13 +61,15 @@ function AddProductModal() {
 
     useEffect(() => {
         if (addSuccess) {
-            toast.success("Uğurla əlavə olundu!!")
+            toast.success("Uğurla əlavə olundu!!", {
+                autoClose: 500
+            })
             dispatch(setProductBrandId(''))
             dispatch(setProductCatId(''))
             dispatch(setProductColors([]))
             dispatch(setProductDescription(''))
             dispatch(setProductDiscount(''))
-            dispatch(setProductImages([]))
+            dispatch(resetProductImages([]))
             dispatch(setProductName(''))
             dispatch(setProductPrice(''))
             dispatch(setProductSize([]))
@@ -83,7 +84,7 @@ function AddProductModal() {
     useEffect(() => {
         if (uploadSuccess) {
             toast.success("Şəkil uğurla əlavə olundu!", {
-                autoClose: 300
+                autoClose: 400
             })
         }
     }, [uploadSuccess])
@@ -95,6 +96,12 @@ function AddProductModal() {
             dispatch(setFlag(true))
         }
     }, [byCategory])
+
+    function handleDeleteImage(index) {
+        const newImages = images?.filter((_, i) => i !== index)
+        dispatch(resetProductImages(newImages))
+    }
+
 
     return (
         <div className="fixed inset-0 bg-[#00000080] flex items-center justify-center z-[999]">
@@ -164,7 +171,6 @@ function AddProductModal() {
                                 ))}
                             </div>
                         </div>
-
                         <div className='w-6/12 mb-3 pl-3'>
                             <p className='text-white font-medium mb-2 text-sm block'>Size</p>
                             <div className="flex flex-col border p-2 border-gray-600 h-[100px] rounded-lg flex-wrap gap-2 ">
@@ -192,9 +198,16 @@ function AddProductModal() {
                         </div>
                         <div className="w-full flex flex-wrap gap-3">
                             {images?.map((item, i) => {
-                                return <div key={i} className="h-20 w-20 overflow-hidden">
-                                    <img src={item} className="w-full h-full" />
-                                </div>
+                                return (
+                                    <div key={i} className="relative h-20 w-20">
+                                        <img src={item} className="w-full h-full" />
+                                        <button
+                                            onClick={() => handleDeleteImage(i)}
+                                            className="absolute top-[-5px] right-[-5px] bg-red-500 text-white rounded-full">
+                                            <FiMinus />
+                                        </button>
+                                    </div>
+                                )
                             })}
                         </div>
                     </div>
