@@ -54,12 +54,6 @@ function AddProductModal() {
     }
 
     useEffect(() => {
-        if (response) {
-            dispatch(setProductImages(response.file.location))
-        }
-    }, [response])
-
-    useEffect(() => {
         if (addSuccess) {
             toast.success("Uğurla əlavə olundu!!", {
                 autoClose: 500
@@ -83,6 +77,7 @@ function AddProductModal() {
 
     useEffect(() => {
         if (uploadSuccess) {
+            dispatch(setProductImages(response.file.location))
             toast.success("Şəkil uğurla əlavə olundu!", {
                 autoClose: 400
             })

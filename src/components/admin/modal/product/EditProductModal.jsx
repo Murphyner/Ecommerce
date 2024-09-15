@@ -1,21 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { IoClose } from 'react-icons/io5'
 import { toast, ToastContainer } from 'react-toastify'
 import { setEditProductFlag } from '../../../../store/ProductModalSlice'
 import { eColors, eSize } from '../../../../enum/Enum'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAllBrandQuery, useAllCategoryQuery, useEditProductMutation, useGetCategoryByIdQuery, useGetProductByIdQuery, useUploadFileMutation } from '../../../../store/api'
-import { deleteProductColors, deleteProductSize, setFlag, setProductBrandId, setProductCatId, setProductColors, setProductDescription, setProductDiscount, setProductImages, setProductName, setProductPrice, setProductSize, setProductSubCatId } from '../../../../store/AddProductSlice'
+import { setFlag, setProductBrandId, setProductCatId, setProductDescription, setProductDiscount, setProductName, setProductPrice, setProductSubCatId } from '../../../../store/AddProductSlice'
 import { FaRegImage } from 'react-icons/fa'
+import { FiMinus } from 'react-icons/fi'
 
 function EditProductModal() {
     const rengler = eColors
     const olculer = eSize
 
+    const colorInput = useRef()
+    const sizeInput = useRef()
+
     const dispatch = useDispatch()
 
+    const [images, setImages] = useState([])
+    const [size, setSize] = useState([])
+    const [colors, setColors] = useState([])
 
-    const { name, description, discount, price, id, images, flag, categoryId, subcategoryId, brandsId, colors, size } = useSelector((state) => state.addProduct)
+    const { name, description, discount, price, id, flag, categoryId, subcategoryId, brandsId } = useSelector((state) => state.addProduct)
 
     const { data: byCategory, isLoading: byCatLoad } = useGetCategoryByIdQuery(categoryId, { skip: categoryId.length === 0 });
 
@@ -57,41 +64,36 @@ function EditProductModal() {
 
     useEffect(() => {
         if (arrSucc) {
-            toast.success("Uğurlu əməliyyat!",{
-                onClose : () => refetch()
+            toast.success("Uğurlu əməliyyat!", {
+                onClose: () => refetch()
             })
         }
 
-        if(arrErr){
+        if (arrErr) {
             toast.error("Error!")
         }
     }, [arrSucc, arrErr])
 
     useEffect(() => {
         if (data) {
+            console.log(data)
             dispatch(setProductName(data.name))
             dispatch(setProductDescription(data.description))
             dispatch(setProductPrice(data.price))
             dispatch(setProductDiscount(data.discount))
-            dispatch(setProductImages(...data.images))
+            setImages(data.images)
             dispatch(setProductCatId(data.categoryId))
             dispatch(setProductSubCatId(data.subcategoryId))
             dispatch(setProductBrandId(data.brandsId))
-            dispatch(setProductColors(...data.Colors))
-            dispatch(setProductSize(...data.Size))
+            setColors(data.Colors)
+            setSize(data.Size)
         }
     }, [data])
 
 
     useEffect(() => {
-        if (response) {
-            dispatch(setProductImages(response.file.location))
-        }
-    }, [response])
-
-
-    useEffect(() => {
         if (uploadSuccess) {
+            setImages([...images, response.file.location])
             toast.success("Şəkil uğurla əlavə olundu!")
         }
     }, [uploadSuccess])
@@ -103,6 +105,37 @@ function EditProductModal() {
             dispatch(setFlag(true))
         }
     }, [byCategory])
+
+    function handleColorChange(checked, value) {
+        if (colors.includes(value)) {
+            const arr = colors.filter((item) => item !== value)
+            setColors(arr)
+            colorInput.current.checked = false
+            return
+        }
+
+        if (checked) {
+            setColors([...colors, value])
+        }
+    }
+
+    function handleSizeChange(checked, value) {
+        if (size.includes(value)) {
+            const arr = size.filter((item) => item !== value)
+            setSize(arr)
+            sizeInput.current.checked = false
+            return
+        }
+
+        if (checked) {
+            setSize([...size, value])
+        }
+    }
+
+    function handleDeleteImage(index) {
+        const newImages = images?.filter((_, i) => i !== index)
+        setImages(newImages)
+    }
 
     return (
         <div className="fixed inset-0 bg-[#00000080] flex items-center justify-center z-[999]">
@@ -126,7 +159,7 @@ function EditProductModal() {
                         </div>
                         <div className='w-6/12 mb-3 pr-3'>
                             <label htmlFor="" className='text-white font-medium mb-2 text-sm block'>Price</label>
-                            <input onChange={(e) => dispatch(setProductPrice(String(e.target.value)))} value={price} placeholder='Product Price...' className='block w-full border outline-none border-gray-600 bg-gray-700 text-white placeholder-gray-400 p-2.5 text-sm rounded-lg' type="text" />
+                            <input onChange={(e) => dispatch(setProductPrice(e.target.value))} value={price} placeholder='Product Price...' className='block w-full border outline-none border-gray-600 bg-gray-700 text-white placeholder-gray-400 p-2.5 text-sm rounded-lg' type="text" />
                         </div>
                         <div className='w-6/12 mb-3 pl-3'>
                             <label htmlFor="" className='text-white font-medium mb-2 text-sm block'>Brand</label>
@@ -166,7 +199,13 @@ function EditProductModal() {
                             <div className="flex border p-2 h-[100px] border-gray-600 rounded-lg flex-wrap gap-2 items-center">
                                 {rengler.map((item, i) => (
                                     <div className="flex gap-1 items-center" key={i}>
-                                        <input onChange={(e) => e.target.checked ? dispatch(setProductColors(e.target.value)) : dispatch(deleteProductColors(e.target.value))} type="checkbox" value={item} name={item} />
+                                        <input
+                                            ref={colorInput}
+                                            checked={colors.includes(item)}
+                                            onChange={(e) => handleColorChange(e.target.checked, item)}
+                                            type="checkbox"
+                                            value={item}
+                                            name={item} />
                                         <label className="text-white text-sm" htmlFor={item}>{item}</label>
                                     </div>
                                 ))}
@@ -178,11 +217,17 @@ function EditProductModal() {
                             <div className="flex flex-col border p-2 border-gray-600 h-[100px] rounded-lg flex-wrap gap-2 ">
                                 {olculer.map((item, i) => (
                                     <div className="flex gap-1 items-center" key={i}>
-                                        <input onChange={(e) => e.target.checked ? dispatch(setProductSize(e.target.value)) : dispatch(deleteProductSize(e.target.value))} type="checkbox" value={item} name={item} />
+                                        <input
+                                            ref={sizeInput}
+                                            checked={size.includes(item)}
+                                            onChange={(e) => handleSizeChange(e.target.checked, item)}
+                                            type="checkbox"
+                                            value={item}
+                                            name={item} />
                                         <label className="text-white text-sm" htmlFor={item}>{item}</label>
                                     </div>
                                 ))}
-                            </div>  
+                            </div>
                         </div>
                         <div className='w-full mb-3'>
                             <label htmlFor="" className='text-white font-medium mb-2 text-sm block'>Description</label>
@@ -200,9 +245,16 @@ function EditProductModal() {
                         </div>
                         <div className="w-full flex gap-3">
                             {images?.map((item, i) => {
-                                return <div key={i} className="h-20 w-20 overflow-hidden">
-                                    <img src={item} className="w-full h-full" />
-                                </div>
+                                return (
+                                    <div key={i} className="relative h-20 w-20">
+                                        <img src={item} className="w-full h-full" />
+                                        <button
+                                            onClick={() => handleDeleteImage(i)}
+                                            className="absolute top-[-5px] right-[-5px] bg-red-500 text-white rounded-full">
+                                            <FiMinus />
+                                        </button>
+                                    </div>
+                                )
                             })}
                         </div>
                     </div>
