@@ -1,9 +1,16 @@
-import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import img from '../assets/gs.jpg'
 import Sidemenu from '../components/admin/Sidemenu'
 
 function AdminLayout() {
+
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
   return (
     <div className='relative'>
       <header className='px-8 py-3 border-b border-gray-700 bg-gray-800'>

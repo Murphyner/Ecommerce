@@ -57,6 +57,10 @@
     bottom: 0 !important;
     left: 0 !important;
     display: flex !important;
+    padding-top: 10px !important;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 #detailSlider .slick-dots{
@@ -71,7 +75,7 @@
 
 #detailSlick .slick-dots > li{
     margin:  0 !important;
-    width: auto !important;
+    width: 20% !important;
     height: auto !important;
     opacity: 0.5 !important;
 }

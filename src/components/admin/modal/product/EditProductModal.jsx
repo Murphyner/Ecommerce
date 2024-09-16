@@ -211,7 +211,6 @@ function EditProductModal() {
                                 ))}
                             </div>
                         </div>
-
                         <div className='w-6/12 mb-3 pl-3'>
                             <p className='text-white font-medium mb-2 text-sm block'>Size</p>
                             <div className="flex flex-col border p-2 border-gray-600 h-[100px] rounded-lg flex-wrap gap-2 ">

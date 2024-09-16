@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import { eGender } from "../../enum/Enum";
 import { useRegisterUserMutation } from "../../store/api";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setBasket } from "../../store/BasketSlice";
 
 function RegisterForm({ setChange }) {
     const [flag, setFlag] = useState(false)
@@ -15,7 +17,9 @@ function RegisterForm({ setChange }) {
 
     const gender = eGender
 
-    const [registerUser, { data, isError,error, isSuccess }] = useRegisterUserMutation()
+    const dispatch = useDispatch()
+
+    const [registerUser, { data, isError, error, isSuccess }] = useRegisterUserMutation()
 
     function handleSubmit(values) {
         let obj = {
@@ -36,6 +40,7 @@ function RegisterForm({ setChange }) {
             localStorage.clear()
             localStorage.setItem("token", data.token)
             localStorage.setItem("user", JSON.stringify(data.user))
+            dispatch(setBasket(data.user.cart))
             navigate(`/account`)
             window.location.reload()
         }

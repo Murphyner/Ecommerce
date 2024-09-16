@@ -5,7 +5,7 @@ const token = localStorage.getItem("token")
 export const api = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({ baseUrl: "https://ecommerse.davidhtml.xyz/" }),
-    tagTypes: ['Category', 'Brand', 'Product'],
+    tagTypes: ['Category', 'Brand', 'Product', 'Cart'],
     endpoints: (builder) => ({
         loginUser: builder.mutation({
             query: (obj) => ({
@@ -206,6 +206,27 @@ export const api = createApi({
                 body : obj
             }),
             invalidatesTags: ['Product']
+        }),
+        allCart : builder.query({
+            query : () => ({
+                url : `/cart/all`,
+                headers : {
+                    "Authorization": `Bearer ${token}`
+                }
+            }),
+            providesTags : ["Cart"]
+        }),
+        addCart : builder.mutation({
+            query : (obj) => ({
+                url : `/cart/add`,
+                method : "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body : obj
+            }),
+            invalidatesTags : ["Cart"]
         })
     })
 })
@@ -231,5 +252,7 @@ export const {
     useAllProductQuery,
     useDeleteProductMutation,
     useGetProductByIdQuery,
-    useEditProductMutation
+    useEditProductMutation,
+    useAllCartQuery,
+    useAddCartMutation
 } = api;

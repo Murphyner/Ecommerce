@@ -6,6 +6,7 @@ import CategoryModalSlice from "./CategoryModalSlice";
 import BrandModalSlice from "./BrandModalSlice";
 import AddProductSlice from "./AddProductSlice";
 import AccountSlice from "./AccountSlice";
+import BasketSlice from "./BasketSlice";
 
 export const store = configureStore({
     reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
         categorySlice : CategoryModalSlice,
         brandSlice : BrandModalSlice,
         addProduct : AddProductSlice,
-        accountSlice : AccountSlice
+        accountSlice : AccountSlice,
+        BasketSlice : BasketSlice
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware)
 })

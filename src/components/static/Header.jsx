@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsBag } from 'react-icons/bs'
 import { HiBars3 } from 'react-icons/hi2'
 import { IoSearchOutline } from 'react-icons/io5'
@@ -6,15 +6,30 @@ import { SlHeart } from 'react-icons/sl'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Sidemenu from './Sidemenu'
 import { AiOutlineUser } from 'react-icons/ai'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setNum } from '../../store/NumSlice'
+import { useAllCartQuery } from '../../store/api'
+import { setBasket } from '../../store/BasketSlice'
 
 function Header() {
     const [flag, setFlag] = useState(false)
     const flagSchema = { flag, setFlag }
     const navigate = useNavigate()
-
     const dispatch = useDispatch()
+
+    const {data, isLoading, refetch} = useAllCartQuery()
+
+    useEffect(() => {
+        if(!isLoading && data){
+            dispatch(setBasket(data))
+        }
+    }, [isLoading, data])
+
+    const {basket, basketFlag} = useSelector((state) => state.BasketSlice)
+
+    useEffect(() => {
+        refetch()
+    }, [basketFlag])
 
     function handleWish(){
         dispatch(setNum(4))
@@ -92,7 +107,10 @@ function Header() {
                                 <button onClick={() => navigate('/cart')} className='p-1'>
                                     <BsBag className='text-[1.25em]' />
                                 </button>
-                                <span className='flex w-4 bg-[#DC375F] rounded-[50px] h-4 justify-center items-center text-[10px] text-white absolute top-[-3px] right-[-6px]'>3</span>
+                                <span 
+                                className={`${basket.length > 0 ? 'flex' : 'hidden'} w-4 bg-[#DC375F] rounded-[50px] h-4 justify-center items-center text-[10px] text-white absolute top-[-3px] right-[-6px]`}>
+                                    {basket.length}
+                                </span>
                             </div>
                         </div>
                     </div>

@@ -1,12 +1,37 @@
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import DetailSlick from "../components/slider/DetailSlick"
-import { FaCheck, FaFacebookF, FaPinterest, FaRegStar, FaStar, FaTwitter } from "react-icons/fa"
+import { FaFacebookF, FaPinterest, FaRegStar, FaStar, FaTwitter } from "react-icons/fa"
 import { FiMinus, FiPlus } from "react-icons/fi"
 import { CiHeart } from "react-icons/ci"
-import img from "../assets/1.jfif"
 import ResponsiveSlick from "../components/slider/ResponsiveSlick"
+import { useGetProductByIdQuery } from "../store/api"
+import { nanoid } from "@reduxjs/toolkit"
+import ColorComp from "../components/static/ColorComp"
+import { useState } from "react"
+import SizeComp from "../components/static/SizeComp"
 
 function Detail() {
+    const { id } = useParams()
+    const { data, isLoading } = useGetProductByIdQuery(id)
+
+    const [count, setCount] = useState(1)
+
+    const [flag, setFlag] = useState(0)
+    const [sizeFlag, setSizeFlag] = useState(0)
+
+    console.log(data)
+
+    function handleChange(x){
+        if(count === 1 && x === -1){
+            return
+        }else{
+            setCount(count + x)
+        }
+    }
+
+    if (isLoading) {
+        return <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin dark:border-blue-600"></div>
+    }
     return (
         <main>
             <div className="container 2xl:w-[1280px] mx-auto md:px-4">
@@ -31,7 +56,7 @@ function Detail() {
                         </div>
                         <div id="detailSlick" className="flex justify-between flex-wrap">
                             <div className="w-full lg:mb-0 lg:w-5/12 mb-14">
-                                <DetailSlick />
+                                <DetailSlick price={data.price} dis={data.discount} img={data.images} />
                             </div>
                             <div className="w-full lg:pl-3 lg:mb-0 lg:w-5/12 mb-4">
                                 <div>
@@ -41,44 +66,39 @@ function Detail() {
                                         ))}
                                     </div>
                                     <div className="mb-3">
-                                        <h2 className="text-[1.875em] font-bold text-[#222]">Contrasting Design T-Shirt</h2>
+                                        <h2 className="text-[1.875em] font-bold text-[#222]">{data.name}</h2>
                                     </div>
                                     <div className="mb-3">
                                         <p className="text-[0.75em] text-[#BBBBBB] font-normal">SKU: AB1609456789</p>
                                     </div>
-                                    <div className="mb-3">
-                                        <span className="text-[#DC375F] text-[1.5em]">$95.90</span>
+                                    <div className="mb-3 flex gap-1 items-center">
+                                        <span className={`${data.discount ? 'text-[#777] text-[1em] line-through' : 'text-[#DC375F] text-[1.5em]'}`}>${data.price}</span>
+                                        <span className={`text-[#DC375F] ${data.discount ? '' : 'hidden'} text-[1.5em]`}>${data.price - data.discount}</span>
                                     </div>
-                                    <div className="hidden lg:mb-3 lg:block">
+                                    <div className="mb-3">
                                         <p className="text-[#B9BBBF] font-medium">Choose a Color</p>
-                                        <div className="flex gap-2 py-3">
-                                            <div className="p-1 border-[3px] border-[#394772] cursor-pointer rounded-[50%]">
-                                                <span className="flex justify-center items-center text-white w-12 h-12 rounded-[50%] bg-[#394772]">
-                                                    <FaCheck />
-                                                </span>
-                                            </div>
-                                            <div className="p-1 cursor-pointer rounded-[50%]">
-                                                <span className="block w-12 h-12 rounded-[50%] bg-[#BBD278]"></span>
-                                            </div>
-                                            <div className="p-1 cursor-pointer rounded-[50%]">
-                                                <span className="block w-12 h-12 rounded-[50%] bg-[#BBC1F8]"></span>
-                                            </div>
-                                            <div className="p-1 cursor-pointer rounded-[50%]">
-                                                <span className="block w-12 h-12 rounded-[50%] bg-[#FFD3F8]"></span>
-                                            </div>
+                                        <div className="flex flex-wrap gap-2 py-3">
+                                            {data.Colors.map((item, i) => (
+                                                <ColorComp key={nanoid()} i={i} flag={flag} setFlag={setFlag} item={item} />
+                                            ))}
                                         </div>
                                     </div>
-                                    <div className="mb-3">
-                                        <p className="text-[#777] w-6/12">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                                    </div>
+                                    <div className="mb-6">
+                                        <p className="text-[#B9BBBF] font-medium">Choose a Size</p>
+                                        <div className="flex flex-wrap gap-2 py-3">
+                                            {data.Size.map((item, i) => (
+                                                <SizeComp key={nanoid()} sizeFlag={sizeFlag} setSizeFlag={setSizeFlag} i={i} item={item} />
+                                            ))}
+                                        </div>
+                                    </div> 
                                     <div className="flex pb-10 border-b border-[#EAEAEA] flex-wrap">
                                         <div className="w-6/12 lg:w-4/12 pr-2 mb-3">
                                             <div className="flex items-center justify-between px-2 border rounded-sm border-[#EAEAEA] lg:py-3 py-2">
-                                                <button>
+                                                <button onClick={() => handleChange(-1)}>
                                                     <FiMinus />
                                                 </button>
-                                                <span className="text-[0.875em]">1</span>
-                                                <button>
+                                                <span className="text-[0.875em]">{count}</span>
+                                                <button onClick={() => handleChange(1)}>
                                                     <FiPlus />
                                                 </button>
                                             </div>
@@ -102,8 +122,8 @@ function Detail() {
                                     </div>
                                     <div className="pb-10 pt-5">
                                         <ul className="mb-10">
-                                            <li className="text-[0.9375em] text-[#999] mb-2"><span className="text-[0.875em] text-[#222] mr-1 uppercase font-bold">Category:</span>Wallets & Cases</li>
-                                            <li className="text-[0.9375em] text-[#999] mb-2"><span className="text-[0.875em] text-[#222] mr-1 uppercase font-bold">Tags:</span>Clothing, t-shirt, woman</li>
+                                            <li className="text-[0.9375em] text-[#999] capitalize mb-2"><span className="text-[0.875em] text-[#222] mr-1 uppercase font-bold">Brand:</span>{data.Brands.name}</li>
+                                            <li className="text-[0.9375em] text-[#999] capitalize mb-2"><span className="text-[0.875em] text-[#222] mr-1 uppercase font-bold">Category:</span>{data.category.name}</li>
                                         </ul>
                                         <ul className="flex items-center gap-3">
                                             <li>
@@ -120,7 +140,7 @@ function Detail() {
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        <div className="pt-10">
                             <div className="border-t border-b border-[#EAEAEA] gap-3 py-3 flex lg:gap-6 lg:flex-row lg:justify-center lg:py-5 flex-col">
                                 <div>
                                     <p className="text-[#DC375F] text-[.95em] font-bold lg:font-medium cursor-pointer">Description</p>
@@ -138,11 +158,7 @@ function Detail() {
                                         <div className="flex flex-col">
                                             <div className="mb-5">
                                                 <h2 className="text-[1.2em] font-normal lg:text-[1.5em] mb-5">Introduction</h2>
-                                                <p className="text-[.8em] lg:text-[1em] font-normal text-[#777]">With ultralight, quality cotton canvas, the
-                                                    JanSport Houston backpack is ideal for a life-
-                                                    on-the-go. This backpack features premium faux
-                                                    leather bottom and trim details, padded 15 in
-                                                    laptop sleeve and tricot lined tablet sleeve</p>
+                                                <p className="text-[.8em] lg:text-[1em] font-normal text-[#777]">{data.description}</p>
                                             </div>
                                             <div>
                                                 <h2 className="text-[1.2em] font-normal lg:text-[1.5em] mb-5">Features</h2>
@@ -159,7 +175,7 @@ function Detail() {
                                     </div>
                                     <div className="w-full lg:w-5/12">
                                         <div className="h-[460px] flex justify-end lg:h-[550px]">
-                                            <img src={img} alt="" className="h-full" />
+                                            <img src={data.images[0]} alt="" className="h-full" />
                                         </div>
                                     </div>
                                 </div>
