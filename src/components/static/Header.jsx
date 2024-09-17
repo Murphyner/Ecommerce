@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setNum } from '../../store/NumSlice'
 import { useAllCartQuery } from '../../store/api'
 import { setBasket } from '../../store/BasketSlice'
+import { toast } from 'react-toastify'
 
 function Header() {
     const [flag, setFlag] = useState(false)
@@ -39,6 +40,19 @@ function Header() {
     function handleUser(){
         dispatch(setNum(1))
         navigate('/account')
+    }
+
+    function goCart(){
+        if(basket.length > 0){
+            navigate('/cart')
+        }else{
+            toast.error("Your cart is empty", {
+                autoClose : 1000,
+                style : {
+                    color : "#000"
+                }
+            })
+        }
     }
 
     return (
@@ -104,7 +118,7 @@ function Header() {
                                 </button>
                             </div>
                             <div className='relative'>
-                                <button onClick={() => navigate('/cart')} className='p-1'>
+                                <button onClick={goCart} className='p-1'>
                                     <BsBag className='text-[1.25em]' />
                                 </button>
                                 <span 

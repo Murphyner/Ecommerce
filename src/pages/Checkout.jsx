@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FaCheck } from 'react-icons/fa'
 import { MdChevronLeft } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
@@ -7,12 +7,40 @@ import ShippingForm from '../components/formik/ShippingForm'
 import { IoIosRadioButtonOff, IoIosRadioButtonOn } from 'react-icons/io'
 import BankCardForm from '../components/formik/BankCardForm'
 import MobileBasketList from '../components/cart/MobileBasketList'
+import { useDispatch, useSelector } from 'react-redux'
+import { nanoid } from '@reduxjs/toolkit'
+import { setSum, setTotalSum } from '../store/BasketSlice'
 
 function Checkout() {
     const navigate = useNavigate()
+    const [flag, setFlag] = useState(false)
+
+    const dispatch = useDispatch()
+
     const formikRef1 = useRef(null);
     const formikRef2 = useRef(null);
     const formikRef3 = useRef(null);
+    const { basket, summaryNum, sum, totalSum } = useSelector(state => state.BasketSlice)
+
+    useEffect(() => {
+        if (basket.length > 0) {
+            setFlag(true)
+
+            const total = basket.reduce((acc, item) => {
+                return acc + ((item.product_id.price - item.product_id.discount) * item.count)
+            }, 0)
+            dispatch(setSum(total))
+        }
+    }, [basket])
+
+    useEffect(() => {
+        if (summaryNum === 1) {
+            dispatch(setTotalSum(sum)) 
+        } else if (summaryNum === 2) {
+            dispatch(setTotalSum(sum + 15))
+        }
+    }, [summaryNum, sum]) 
+
 
     const handleButtonClick = async () => {
         const formikRefs = [formikRef1, formikRef2, formikRef3];
@@ -30,7 +58,7 @@ function Checkout() {
             navigate('/complete');
         }
     };
-    
+
     return (
         <main>
             <div className="container 2xl:w-[1280px] mx-auto md:px-4">
@@ -103,7 +131,9 @@ function Checkout() {
                             <div className='border border-[#6C7275] pt-6 pb-4 mb-8 px-4 rounded'>
                                 <h4 className='font-semibold mb-4 text-[1em] lg:text-[1.25em]'>Contact Infomation</h4>
                                 <div className='mb-3'>
-                                    <MobileBasketList />
+                                    {flag &&
+                                        basket.map((item) => <MobileBasketList key={nanoid()} item={item} />)
+                                    }
                                 </div>
                                 <div className='flex'>
                                     <div className='w-8/12 pr-3'>
@@ -117,15 +147,15 @@ function Checkout() {
                                     <ul>
                                         <li className='flex border-[#E8ECEF] border-b pb-4 justify-between items-center'>
                                             <span className='text-[1em] font-normal'>Shipping</span>
-                                            <span className='text-[1em] font-semibold'>Free</span>
+                                            <span className='text-[1em] font-semibold'>{summaryNum === 1 ? "Free" : 'Express' }</span>
                                         </li>
                                         <li className='flex border-[#E8ECEF] border-b py-4 justify-between items-center'>
                                             <span className='text-[1em] font-normal'>Subtotal</span>
-                                            <span className='text-[1em] font-semibold'>$99.00</span>
+                                            <span className='text-[1em] font-semibold'>$ {sum}</span>
                                         </li>
                                         <li className='flex pt-4 justify-between items-center'>
                                             <span className='text-[1.25em] font-medium'>Total</span>
-                                            <span className='text-[1.25em] font-medium'>$234.00</span>
+                                            <span className='text-[1.25em] font-medium'>$ {totalSum}</span>
                                         </li>
                                     </ul>
                                 </div>

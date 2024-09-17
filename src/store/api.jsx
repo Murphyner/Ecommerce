@@ -17,10 +17,10 @@ export const api = createApi({
                 body: obj
             })
         }),
-        registerUser : builder.mutation({
-            query : (obj) => ({
-                url : `/register`,
-                method : "POST",
+        registerUser: builder.mutation({
+            query: (obj) => ({
+                url: `/register`,
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -173,16 +173,16 @@ export const api = createApi({
             }),
             invalidatesTags: ['Product']
         }),
-        allProduct : builder.query({
-            query : () => ({
-                url : `/products/all`
+        allProduct: builder.query({
+            query: () => ({
+                url: `/products/all`
             }),
             providesTags: ['Product']
         }),
-        deleteProduct : builder.mutation({
-            query : (id) => ({
-                url : `/products/delete/${id}`,
-                method : "DELETE",
+        deleteProduct: builder.mutation({
+            query: (id) => ({
+                url: `/products/delete/${id}`,
+                method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
@@ -190,41 +190,64 @@ export const api = createApi({
             }),
             invalidatesTags: ['Product']
         }),
-        getProductById : builder.query({
-            query : (id) => ({
-                url : `/products/get/${id}`
+        getProductById: builder.query({
+            query: (id) => ({
+                url: `/products/get/${id}`
             })
         }),
-        editProduct : builder.mutation({
-            query : ({id, obj}) => ({
-                url : `/products/update/${id}`,
-                method : "PATCH",
+        editProduct: builder.mutation({
+            query: ({ id, obj }) => ({
+                url: `/products/update/${id}`,
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
-                body : obj
+                body: obj
             }),
             invalidatesTags: ['Product']
         }),
-        allCart : builder.query({
-            query : () => ({
-                url : `/cart/all`,
-                headers : {
+        allCart: builder.query({
+            query: () => ({
+                url: `/cart/all`,
+                headers: {
                     "Authorization": `Bearer ${token}`
                 }
             }),
-            providesTags : ["Cart"]
+            providesTags: ["Cart"]
         }),
-        addCart : builder.mutation({
-            query : (obj) => ({
-                url : `/cart/add`,
-                method : "POST",
+        addCart: builder.mutation({
+            query: (obj) => ({
+                url: `/cart/add`,
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
-                body : obj
+                body: obj
+            }),
+            invalidatesTags: ["Cart"]
+        }),
+        deleteCart: builder.mutation({
+            query: (id) => ({
+                url: `/cart/delete/${id}`,
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            }),
+            invalidatesTags: ["Cart"]
+        }),
+        updateCart: builder.mutation({
+            query: ({ productId, count }) => ({
+                url: `/cart/change`,
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body : {productId, count}
             }),
             invalidatesTags : ["Cart"]
         })
@@ -254,5 +277,7 @@ export const {
     useGetProductByIdQuery,
     useEditProductMutation,
     useAllCartQuery,
-    useAddCartMutation
+    useAddCartMutation,
+    useDeleteCartMutation,
+    useUpdateCartMutation
 } = api;

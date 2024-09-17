@@ -32,7 +32,9 @@ function ProductCard({ x, item }) {
 
     useEffect(() => {
         if (isSuccess) {
-            toast.success("Added to cart")
+            toast.success("Added to cart", {
+                autoClose : 1000
+            })
             dispatch(setBasketFlag(!basketFlag))
         }
     }, [isSuccess, isError])
