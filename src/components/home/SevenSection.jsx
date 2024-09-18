@@ -4,7 +4,7 @@ function SevenSection() {
             <div className="container 2xl:w-[1280px] mx-auto md:px-4">
                 <div className="px-8 md:px-0">
                     <div className="mb-6 lg:mb-10">
-                        <h2 className="text-[1.25em] text-center font-medium uppercase">Why Us</h2>
+                        <h2 className="text-[1.25em] lg:text-[1.5em] text-center font-medium uppercase">Why Us</h2>
                     </div>
                     <div className="flex flex-wrap">
                         <div className="w-full md:w-6/12 lg:mb-0 lg:w-3/12 md:pr-3 mb-6">

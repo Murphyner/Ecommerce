@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react'
 import img from '../../assets/products1.jfif'
 import { VscHeart } from 'react-icons/vsc'
-import { IoEyeOutline } from 'react-icons/io5'
+// import { IoEyeOutline } from 'react-icons/io5'
 import { FaRegStar, FaStar } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
-import { useAddCartMutation, useAllCartQuery } from '../../store/api'
-import { toast, ToastContainer } from 'react-toastify'
-import { useDispatch, useSelector } from 'react-redux'
-import { setBasketFlag } from '../../store/BasketSlice'
+// import { useAddCartMutation } from '../../store/api'
+// import { toast } from 'react-toastify'
+// import { useDispatch, useSelector } from 'react-redux'
+// import { setBasketFlag } from '../../store/BasketSlice'
 
 function ProductCard({ x, item }) {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
+
+    // const token = localStorage.getItem("token")
 
     let discount = 0
 
@@ -19,25 +21,30 @@ function ProductCard({ x, item }) {
         discount = ((item.discount / item.price) * 100).toFixed(0)
     }
 
-    const [addCart, {isSuccess, isError }] = useAddCartMutation()
+    // const [addCart, { isSuccess, isError }] = useAddCartMutation()
 
-    const {basketFlag} = useSelector((state) => state.BasketSlice)
+    // const { basketFlag } = useSelector((state) => state.BasketSlice)
 
-    function handleAddCart() {
-        let obj = {
-            productId: item.id
-        }
-        addCart(obj)
-    }
+    // function handleAddCart() {
+    //     if (token) {
+    //         let obj = {
+    //             productId: item.id,
 
-    useEffect(() => {
-        if (isSuccess) {
-            toast.success("Added to cart", {
-                autoClose : 1000
-            })
-            dispatch(setBasketFlag(!basketFlag))
-        }
-    }, [isSuccess, isError])
+    //         }
+    //         addCart(obj)
+    //     } else {
+    //         navigate('/account')
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     if (isSuccess) {
+    //         toast.success("Added to cart", {
+    //             autoClose: 1000
+    //         })
+    //         dispatch(setBasketFlag(!basketFlag))
+    //     }
+    // }, [isSuccess, isError])
 
     return (
         <>
@@ -50,11 +57,11 @@ function ProductCard({ x, item }) {
                                 <VscHeart />
                             </button>
                         </li>
-                        <li>
+                        {/* <li>
                             <button onClick={() => navigate(`/detail/${item.id}`)} className='bg-white shadow-md h-8 w-8 xl:h-10 xl:w-10 flex justify-center items-center rounded-[50px]'>
                                 <IoEyeOutline />
                             </button>
-                        </li>
+                        </li> */}
                     </ul>
                     <div className={`absolute ${item?.discount ? 'flex' : 'hidden'} z-10 right-2 top-2 h-10 rounded-full p-1 items-center justify-center text-[0.875em] text-white w-10 bg-red-500`}>{discount} <span>&nbsp;</span> <span className='text-[0.775em]'>%</span> </div>
                 </div>
@@ -65,7 +72,7 @@ function ProductCard({ x, item }) {
                             index < x ? <FaStar key={index} className='text-yellow-500' /> : <FaRegStar key={index} />
                         ))}
                     </div>
-                    <h3 className='text-[0.875em] xl:text-[1em] mb-2 xl:mb-3 font-normal lg:text-start text-center'>{item ? item.name.slice(0, 32) : "Sleeveless Gown"}</h3>
+                    <h3 className='text-[0.875em] xl:text-[1em] mb-2 xl:mb-3 font-normal lg:text-start text-center'>{item ? item.name.slice(0, 27) : "Sleeveless Gown"}</h3>
                     <div className='flex flex-col lg:flex-row lg:items-center lg:justify-between'>
                         <div className='flex items-center mb-2 gap-2'>
                             <p className={`text-center font-medium text-[0.875em] xl:text-[1em]  ${item?.discount ? 'line-through text-[0.775em] xl:text-[.9em] text-[#777]' : 'text-[#DC375F]'}`}>
@@ -77,8 +84,8 @@ function ProductCard({ x, item }) {
                         </div>
                         <div className='flex justify-center'>
                             <button
-                                onClick={handleAddCart}
-                                className='pb-[2px] xl:pb-0 xl:text-[1em] border-b-2 font-medium text-[0.75em] border-[#333333]'>Add to Cart</button>
+                                onClick={() => navigate(`/detail/${item.id}`)}
+                                className='pb-[2px] xl:pb-0 xl:text-[1em] border-b-2 font-medium text-[0.75em] border-[#333333]'>View product</button>
                         </div>
                     </div>
                 </div>

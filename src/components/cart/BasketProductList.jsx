@@ -26,7 +26,6 @@ function BasketProductList({ item }) {
             setCount(count + x);
             let productId = item.productId;
             updateCart({ productId, count: x })
-         
         }
     }
 

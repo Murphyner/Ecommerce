@@ -46,11 +46,11 @@ function BasketSummary() {
                 <div className='mb-3'>
                     <div className='flex justify-between py-3 border-b border-[#EAEAEA] items-center'>
                         <p className='text-[0.875em] lg:font-normal lg:text-[1em] font-bold'>Subtotal</p>
-                        <span className='text-[0.875em] lg:font-semibold lg:text-[1em] font-bold'>$ {sum}</span>
+                        <span className='text-[0.875em] lg:font-semibold lg:text-[1em] font-bold'>$ {sum.toFixed(2)}</span>
                     </div>
                     <div className='flex justify-between py-3 items-center'>
                         <p className='text-[0.875em] lg:text-[1.25em] font-bold'>Total</p>
-                        <span className='text-[0.875em] lg:text-[1.25em] font-bold'>$ {totalSum}</span>
+                        <span className='text-[0.875em] lg:text-[1.25em] font-bold'>$ {totalSum.toFixed(2)}</span>
                     </div>
                 </div>
                 <button onClick={() => navigate('/checkout')} className='text-[1.125em] font-medium bg-[#DC375F] text-white flex justify-center w-full rounded-lg py-[12px]'>

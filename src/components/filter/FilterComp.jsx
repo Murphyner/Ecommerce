@@ -2,16 +2,41 @@ import { nanoid } from '@reduxjs/toolkit'
 import React, { useState } from 'react'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import InputRange from '../slider/InputRange'
+import { useAllBrandQuery, useAllCategoryQuery } from '../../store/api'
+import { eColors, eSize } from '../../enum/Enum'
 
 function FilterComp() {
+    const colors = eColors
+    const size = eSize
+    const [drop, setDrop] = useState(true)
     const [drop1, setDrop1] = useState(true)
-    const [drop2, setDrop2] = useState(true)
+    const [drop2, setDrop2] = useState(false)
     const [drop3, setDrop3] = useState(false)
     const [drop4, setDrop4] = useState(false)
-    const [value , setValue] = useState([100, 10000])
-    
+    const [value , setValue] = useState([0, 3000])
+    const {data : category, isLoading : categoryLoad } = useAllCategoryQuery()
+    const {data : brand, isLoading : brandLoad } = useAllBrandQuery()
+
     return (
         <ul>
+            <li className='py-3 border-t border-[#EAEAE6]'>
+                <div onClick={() => setDrop(!drop)} className='flex cursor-pointer justify-between items-center'>
+                    <h2 className='font-semibold capitalize lg:text-[1.2em] text-[.925em]'>brand</h2>
+                    <span>
+                        <MdOutlineKeyboardArrowDown className={`${drop1 ? '' : 'rotate-180'} duration-300`} />
+                    </span>
+                </div>
+                <div className={`${drop ? 'filter-drop-active' : 'filter-drop'}`}>
+                    {!brandLoad && brand.map((item, index) => (
+                        <div key={nanoid()} className='flex mb-2 items-center gap-2'>
+                            <input type="checkbox" className='cursor-pointer' />
+                            <span className='font-medium text-[.825em] lg:text-[.925em] text-[#999999] capitalize'>
+                                {item.name}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            </li>
             <li className='py-3 border-t border-[#EAEAE6]'>
                 <div onClick={() => setDrop1(!drop1)} className='flex cursor-pointer justify-between items-center'>
                     <h2 className='font-semibold capitalize lg:text-[1.2em] text-[.925em]'>category</h2>
@@ -20,11 +45,11 @@ function FilterComp() {
                     </span>
                 </div>
                 <div className={`${drop1 ? 'filter-drop-active' : 'filter-drop'}`}>
-                    {Array.from({ length: 5 }).map((_, index) => (
+                    {!categoryLoad && category.map((item, index) => (
                         <div key={nanoid()} className='flex mb-2 items-center gap-2'>
-                            <input type="checkbox" />
+                            <input type="checkbox" className='cursor-pointer' />
                             <span className='font-medium text-[.825em] lg:text-[.925em] text-[#999999] capitalize'>
-                                salam
+                                {item.name}
                             </span>
                         </div>
                     ))}
@@ -38,11 +63,11 @@ function FilterComp() {
                     </span>
                 </div>
                 <div className={`${drop2 ? 'filter-drop-active' : 'filter-drop'}`}>
-                    {Array.from({ length: 5 }).map((_, index) => (
+                    {colors.map((item, index) => (
                         <div key={nanoid()} className='flex mb-2 items-center gap-2'>
-                            <span className='block w-5 h-5 rounded-full bg-lime-500'></span>
+                            <span className={`${item.toLowerCase() === 'black' ? 'bg-black' : `bg-${item.toLowerCase()}-500` } block w-5 h-5 rounded-full shadow-md `}></span>
                             <span className='font-medium text-[.825em] lg:text-[.925em] text-[#999999] capitalize'>
-                                salam
+                                {item}
                             </span>
                         </div>
                     ))}
@@ -72,11 +97,11 @@ function FilterComp() {
                     </span>
                 </div>
                 <div className={`${drop4 ? 'filter-drop-active' : 'filter-drop'}`}>
-                    {Array.from({ length: 5 }).map((_, index) => (
+                    {size.map((item, index) => (
                         <div key={nanoid()} className='flex mb-2 items-center gap-2'>
-                            <input type="checkbox" />
+                            <input type="checkbox" className='cursor-pointer' />
                             <span className='font-medium text-[.825em] lg:text-[.925em] text-[#999999] capitalize'>
-                                salam
+                                {item}
                             </span>
                         </div>
                     ))}
@@ -96,6 +121,10 @@ function FilterComp() {
                 </div>
                 <div className='hidden md:block md:py-2'>
                     <InputRange value={value} setValue={setValue} />
+                    <div className='flex justify-between items-center'>
+                        <span>Min: {value[0]}</span>
+                        <span>Max: {value[1]}</span>
+                    </div>
                 </div>
             </li>
             <li>

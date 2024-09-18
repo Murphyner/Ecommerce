@@ -15,8 +15,8 @@ export default function InputRange({ value, setValue }) {
   return (
     <Box >
       <Slider
-        min={100}
-        max={1000}
+        min={0}
+        max={3000}
         step={100}
         getAriaLabel={() => 'Price range'}
         value={value}

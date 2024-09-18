@@ -1,9 +1,10 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import * as Yup from 'yup';
 
-function PasswordForm() {
+function PasswordForm({ formikRef2 }) {
     return (
         <Formik
+            innerRef={formikRef2}
             initialValues={{
                 oldPass: '',
                 newPass: '',
@@ -12,17 +13,13 @@ function PasswordForm() {
             validationSchema={Yup.object({
                 oldPass: Yup.string()
                     .required('Old Password is required')
-                    .min(8, 'Old Password must be at least 8 characters')
-                    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                        'Old Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
+                    .min(8, 'Old Password must be at least 8 characters'),
                 newPass: Yup.string()
                     .required('New Password is required')
-                    .min(8, 'New Password must be at least 8 characters')
-                    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                        'New Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
+                    .min(8, 'New Password must be at least 8 characters'),
                 repPass: Yup.string()
                     .required('Please repeat the new password')
-                    .oneOf([Yup.ref('newPassword')], 'Passwords must match')
+                    .oneOf([Yup.ref('newPass')], 'Passwords must match')
             })}
         >
             {() => (

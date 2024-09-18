@@ -1,25 +1,36 @@
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import DetailSlick from "../components/slider/DetailSlick"
 import { FaFacebookF, FaPinterest, FaRegStar, FaStar, FaTwitter } from "react-icons/fa"
 import { FiMinus, FiPlus } from "react-icons/fi"
 import { CiHeart } from "react-icons/ci"
 import ResponsiveSlick from "../components/slider/ResponsiveSlick"
-import { useGetProductByIdQuery } from "../store/api"
+import { useAddCartMutation, useGetProductByIdQuery } from "../store/api"
 import { nanoid } from "@reduxjs/toolkit"
 import ColorComp from "../components/static/ColorComp"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import SizeComp from "../components/static/SizeComp"
+import Loading from "../components/static/Loading"
+import { useDispatch, useSelector } from "react-redux"
+import { setBasketFlag } from "../store/BasketSlice"
+import { toast } from "react-toastify"
 
 function Detail() {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const { id } = useParams()
     const { data, isLoading } = useGetProductByIdQuery(id)
 
+    
     const [count, setCount] = useState(1)
+    const [color, setcolor] = useState('')
+    const [size, setSize] = useState('')
+    
+    const [flag, setFlag] = useState(-1)
+    const [sizeFlag, setSizeFlag] = useState(-1)
 
-    const [flag, setFlag] = useState(0)
-    const [sizeFlag, setSizeFlag] = useState(0)
+    const token = localStorage.getItem("token")
 
-    console.log(data)
+    const [addCart, { isSuccess, isError }] = useAddCartMutation()
 
     function handleChange(x){
         if(count === 1 && x === -1){
@@ -29,8 +40,40 @@ function Detail() {
         }
     }
 
+    const { basketFlag } = useSelector((state) => state.BasketSlice)
+
+    function handleAdd() {
+        if (token) {
+            if (color.length > 0 && size.length > 0) {
+                let obj = {
+                    productId: Number(id),
+                    count : count,
+                    Color : color,
+                    Size : size
+                }
+                addCart(obj)
+            }else{
+                toast.info("Please select a size or color",{
+                    autoClose : 900
+                })
+            }
+            
+        } else {
+            navigate('/account')
+        }
+    }
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success("Added to cart", {
+                autoClose: 1000
+            })
+            dispatch(setBasketFlag(!basketFlag))
+        }
+    }, [isSuccess, isError])
+
     if (isLoading) {
-        return <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin dark:border-blue-600"></div>
+        return <Loading />
     }
     return (
         <main>
@@ -73,13 +116,13 @@ function Detail() {
                                     </div>
                                     <div className="mb-3 flex gap-1 items-center">
                                         <span className={`${data.discount ? 'text-[#777] text-[1em] line-through' : 'text-[#DC375F] text-[1.5em]'}`}>${data.price}</span>
-                                        <span className={`text-[#DC375F] ${data.discount ? '' : 'hidden'} text-[1.5em]`}>${data.price - data.discount}</span>
+                                        <span className={`text-[#DC375F] ${data.discount ? '' : 'hidden'} text-[1.5em]`}>${(data.price - data.discount).toFixed(2)}</span>
                                     </div>
                                     <div className="mb-3">
                                         <p className="text-[#B9BBBF] font-medium">Choose a Color</p>
                                         <div className="flex flex-wrap gap-2 py-3">
                                             {data.Colors.map((item, i) => (
-                                                <ColorComp key={nanoid()} i={i} flag={flag} setFlag={setFlag} item={item} />
+                                                <ColorComp setcolor={setcolor} key={nanoid()} i={i} flag={flag} setFlag={setFlag} item={item} />
                                             ))}
                                         </div>
                                     </div>
@@ -87,7 +130,7 @@ function Detail() {
                                         <p className="text-[#B9BBBF] font-medium">Choose a Size</p>
                                         <div className="flex flex-wrap gap-2 py-3">
                                             {data.Size.map((item, i) => (
-                                                <SizeComp key={nanoid()} sizeFlag={sizeFlag} setSizeFlag={setSizeFlag} i={i} item={item} />
+                                                <SizeComp setSize={setSize} key={nanoid()} sizeFlag={sizeFlag} setSizeFlag={setSizeFlag} i={i} item={item} />
                                             ))}
                                         </div>
                                     </div> 
@@ -104,7 +147,9 @@ function Detail() {
                                             </div>
                                         </div>
                                         <div className="w-6/12 lg:px-2 pl-2 mb-3">
-                                            <button className="bg-[#222222] lg:py-3 font-medium text-white rounded-sm py-2 block w-full">
+                                            <button 
+                                            onClick={handleAdd}
+                                            className="bg-[#222222] lg:py-3 font-medium text-white rounded-sm py-2 block w-full">
                                                 Add to cart
                                             </button>
                                         </div>

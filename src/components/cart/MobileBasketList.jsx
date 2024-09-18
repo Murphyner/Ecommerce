@@ -1,18 +1,12 @@
 import React, {  useState } from 'react'
 import { HiMiniMinusSmall, HiOutlinePlusSmall } from 'react-icons/hi2'
 import { IoMdClose } from 'react-icons/io'
-import { useDeleteCartMutation, useUpdateCartMutation } from '../../store/api'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useDeleteCartMutation, useUpdateCartMutation } from '../../store/api' 
 
 function MobileBasketList({ item }) {
     const [count, setCount] = useState(item.count)
 
-    const navigate = useNavigate()
-
     let man = 0
-
-    const { basket } = useSelector(state => state.BasketSlice)
 
     const [updateCart] = useUpdateCartMutation()
 
@@ -26,10 +20,6 @@ function MobileBasketList({ item }) {
 
     async function handleDelete(){
         await deleteCart(item.productId)
-        console.log(basket.length)
-        if(basket.length === 1){
-            navigate('/')
-        }
     }
 
     function handleChange(x){

@@ -1,13 +1,16 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import * as Yup from 'yup';
 
-function AccountForm() {
+function AccountForm({ formikRef1 }) {
+    const user = JSON.parse(localStorage.getItem("user"))
+    
     return (
         <Formik
+            innerRef={formikRef1}
             initialValues={{
                 firstName: '',
-                userName: '',
-                accountEmail: ''
+                userName: user ? user.name : '',
+                accountEmail: user ? user.email : ''
             }}
             validationSchema={Yup.object({
                 firstName: Yup.string()
@@ -33,11 +36,11 @@ function AccountForm() {
                         </div>
                         <div className='w-full mb-4'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="userName">User name *</label>
-                            <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='User name' name="userName" type="text" />
+                            <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder={user ? user.name : ''} disabled name="userName" type="text" />
                             <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="userName" component="div" /></div>
                         <div className='w-full'>
                             <label className='block font-bold mb-1 text-[0.75em] text-[#6C7275]' htmlFor="accountEmail">Email *</label>
-                            <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder='Email' name="accountEmail" type="text" />
+                            <Field className='bg-transparent text-[#9CA3AF] rounded-md  outline-none border-2 w-full py-2 px-4 block' placeholder={user ? user.email : ""} disabled name="accountEmail" type="text" />
                             <ErrorMessage className='text-red-500 pl-4 text-[0.75em]' name="accountEmail" component="div" />
                         </div>
                     </div>

@@ -11,6 +11,7 @@ import { setNum } from '../../store/NumSlice'
 import { useAllCartQuery } from '../../store/api'
 import { setBasket } from '../../store/BasketSlice'
 import { toast } from 'react-toastify'
+import { skipToken } from '@reduxjs/toolkit/query'
 
 function Header() {
     const [flag, setFlag] = useState(false)
@@ -18,38 +19,44 @@ function Header() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const {data, isLoading, refetch} = useAllCartQuery()
+    const token = localStorage.getItem("token")
+    const { basket, basketFlag } = useSelector((state) => state.BasketSlice)
+
+    const { data, isLoading, refetch } = useAllCartQuery(token ? undefined : skipToken);
 
     useEffect(() => {
-        if(!isLoading && data){
-            dispatch(setBasket(data))
+        if (token) {
+            if (!isLoading && data) {
+                dispatch(setBasket(data))
+            }
         }
-    }, [isLoading, data])
-
-    const {basket, basketFlag} = useSelector((state) => state.BasketSlice)
+    }, [isLoading, token, data])
 
     useEffect(() => {
-        refetch()
-    }, [basketFlag])
+        if (token && basketFlag) {
+            refetch();
+        }
+    }, [basketFlag, token, refetch]);
+    
 
-    function handleWish(){
+    function handleWish() {
         dispatch(setNum(4))
         navigate('/account')
     }
 
-    function handleUser(){
+    function handleUser() {
         dispatch(setNum(1))
         navigate('/account')
     }
 
-    function goCart(){
-        if(basket.length > 0){
+    function goCart() {
+        if (basket.length > 0) {
             navigate('/cart')
-        }else{
+        } else {
             toast.error("Your cart is empty", {
-                autoClose : 1000,
-                style : {
-                    color : "#000"
+                autoClose: 1000,
+                style: {
+                    color: "#000"
                 }
             })
         }
@@ -121,8 +128,8 @@ function Header() {
                                 <button onClick={goCart} className='p-1'>
                                     <BsBag className='text-[1.25em]' />
                                 </button>
-                                <span 
-                                className={`${basket.length > 0 ? 'flex' : 'hidden'} w-4 bg-[#DC375F] rounded-[50px] h-4 justify-center items-center text-[10px] text-white absolute top-[-3px] right-[-6px]`}>
+                                <span
+                                    className={`${basket.length > 0 ? 'flex' : 'hidden'} w-4 bg-[#DC375F] rounded-[50px] h-4 justify-center items-center text-[10px] text-white absolute top-[-3px] right-[-6px]`}>
                                     {basket.length}
                                 </span>
                             </div>

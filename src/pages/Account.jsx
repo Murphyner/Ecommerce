@@ -7,32 +7,60 @@ import { useDispatch, useSelector } from "react-redux"
 import { setNum } from "../store/NumSlice"
 import WishlistComp from "../components/account/WishlistComp"
 import LogoutComp from "../components/account/LogoutComp"
-import { useEffect, useState } from "react"
-import { setArr } from "../store/AccountSlice"
+import { useEffect, useRef, useState } from "react"
+import { setArr, setImg } from "../store/AccountSlice"
+import { useUploadFileMutation } from "../store/api"
+import { toast } from "react-toastify"
 
 function Account() {
     const navigate = useNavigate()
     const [flag, setFlag] = useState(false)
 
-    const {num} = useSelector(state => state.number)
+    const { num } = useSelector(state => state.number)
     const dispatch = useDispatch()
 
-    const {arr} = useSelector(state => state.accountSlice)
+    const { arr } = useSelector(state => state.accountSlice)
 
-    
+    const [uploadFile, { data: response, isSuccess: uploadSuccess }] = useUploadFileMutation()
+
+    const fileInputRef = useRef(null);
+
+    const handleButtonClick = () => {
+        fileInputRef.current.click();
+    };
+
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+        if (selectedFile) {
+            const formData = new FormData()
+            formData.append('image', selectedFile)
+            uploadFile(formData)
+        }
+    };
+
+    useEffect(() => {
+        if (uploadSuccess) {
+            dispatch(setImg(response.file.location))
+            toast.success("Şəkil uğurla əlavə olundu!", {
+                autoClose: 400
+            })
+        }
+    }, [uploadSuccess])
+
+
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"))
-        if(user){
+        if (user) {
             dispatch(setArr(user))
         }
     }, [])
 
     useEffect(() => {
-        if(num === 5){
+        if (num === 5) {
             setFlag(true)
         }
     }, [num])
-    
+
     return (
         <main>
             {flag && <LogoutComp setFlag={setFlag} />}
@@ -55,9 +83,17 @@ function Account() {
                                         <div className="relative mb-2">
                                             <div className="w-20 h-20 rounded-[50%] overflow-hidden">
                                                 <img src={arr?.user_img} alt="" className="w-full h-full object-cover" />
-                                                <span className="w-7 h-7 flex justify-center items-center absolute z-10 bottom-[-5px] right-[-5px] rounded-[50px] bg-[#FE5196] text-white border-[1.5px] border-white">
+                                                <input
+                                                    type="file"
+                                                    ref={fileInputRef}
+                                                    className="hidden"
+                                                    onChange={handleFileChange}
+                                                />
+                                                <button
+                                                    onClick={handleButtonClick}
+                                                    className="w-7 h-7 flex justify-center items-center absolute z-10 bottom-[-5px] right-[-5px] rounded-[50px] bg-[#FE5196] text-white border-[1.5px] border-white">
                                                     <CiCamera />
-                                                </span>
+                                                </button>
                                             </div>
                                         </div>
                                         <h3 className="text-[1.25em] mb-5 font-semibold text-center">{arr.username}</h3>
@@ -71,13 +107,13 @@ function Account() {
                                     <div className="hidden lg:block">
                                         <ul>
                                             <li className={`py-3  ${num === 1 ? 'border-b border-[#dc375f]' : ''}`}>
-                                                <button onClick={() => dispatch(setNum(1))} className={` font-semibold text-[1em] ${ num === 1 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Account</button> 
+                                                <button onClick={() => dispatch(setNum(1))} className={` font-semibold text-[1em] ${num === 1 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Account</button>
                                             </li>
                                             <li className={`py-3  ${num === 3 ? 'border-b border-[#dc375f]' : ''}`}>
-                                                <button onClick={() => dispatch(setNum(3))} className={` font-semibold text-[1em] ${ num === 3 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Orders</button>
+                                                <button onClick={() => dispatch(setNum(3))} className={` font-semibold text-[1em] ${num === 3 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Orders</button>
                                             </li>
                                             <li className={`py-3  ${num === 4 ? 'border-b border-[#dc375f]' : ''}`}>
-                                                <button onClick={() => dispatch(setNum(4))} className={` font-semibold text-[1em] ${ num === 4 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Wishlist</button>
+                                                <button onClick={() => dispatch(setNum(4))} className={` font-semibold text-[1em] ${num === 4 ? 'text-[#DC375F]' : 'text-[#6C7275]'}`}>Wishlist</button>
                                             </li>
                                             <li className={`py-3 `}>
                                                 <button onClick={() => setFlag(true)} className={` font-semibold text-[1em] text-[#6C7275]`}>Log Out</button>

@@ -1,12 +1,13 @@
 import React from 'react'
 import ProductCard from '../static/ProductCard'
 import { useAllProductQuery } from '../../store/api'
+import Loading from '../static/Loading'
 
 function SixSection() {
     const {data , isLoading} = useAllProductQuery()
 
     if(isLoading){
-        return <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin dark:border-blue-600"></div>
+        return <Loading />
     }
 
     return (

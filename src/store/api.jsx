@@ -27,6 +27,17 @@ export const api = createApi({
                 body: obj
             })
         }),
+        updateUser : builder.mutation({
+            query : (obj) => ({
+                url : `/user/update`,
+                method : "PUT",
+                headers : {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body : obj
+            })
+        }),
         addCategory: builder.mutation({
             query: ({ name, slug }) => ({
                 url: `/categories/create`,
@@ -257,6 +268,7 @@ export const api = createApi({
 export const {
     useLoginUserMutation,
     useRegisterUserMutation,
+    useUpdateUserMutation,
     useAddCategoryMutation,
     useAllCategoryQuery,
     useDeleteCategoryMutation,
