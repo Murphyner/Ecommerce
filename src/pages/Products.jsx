@@ -4,12 +4,16 @@ import ProductCard from '../components/static/ProductCard'
 import FilterSide from '../components/filter/FilterSide'
 import { useEffect, useState } from 'react'
 import FilterComp from '../components/filter/FilterComp'
+import { useSelector } from 'react-redux'
+import Loading from '../components/static/Loading'
 
 function Products() {
     const [flag, setFlag] = useState(false)
     const flagScheme = { flag, setFlag }
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1024)
+
+    const { filterData, load } = useSelector(state => state.FilterSlice)
 
     useEffect(() => {
         const handleResize = () => {
@@ -67,7 +71,7 @@ function Products() {
                                 </span>
                             </button>
                         </div>
-                        <div className='pt-10 flex flex-wrap'>
+                        <div className='pt-10 flex flex-wrap items-start'>
                             <div className='hidden md:block md:w-3/12'>
                                 <div>
                                     <h2 className='font-medium mb-4 text-[2.2em]'>Filter</h2>
@@ -75,11 +79,13 @@ function Products() {
                                 </div>
                             </div>
                             <div className='flex w-full md:w-9/12 md:pl-4 flex-wrap'>
-                                {Array.from({ length: 18 }).map((_, index) => (
-                                    <div key={nanoid()} className='w-6/12 lg:w-4/12 px-2'>
-                                        <ProductCard x={index % 2 ? 2 : 3} />
-                                    </div>
-                                ))}
+                                {load ? <Loading /> : (
+                                    filterData.map((item, index) => (
+                                        <div key={nanoid()} className='w-6/12 lg:w-4/12 px-2'>
+                                            <ProductCard item={item} x={index % 2 ? 2 : 3} />
+                                        </div>
+                                    ))
+                                )}
                             </div>
                         </div>
                         <div className='py-10 border-t border-b border-[#CBCBCB]'>

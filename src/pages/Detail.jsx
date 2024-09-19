@@ -48,8 +48,8 @@ function Detail() {
                 let obj = {
                     productId: Number(id),
                     count : count,
-                    Color : color,
-                    Size : size
+                    color : color.toUpperCase(),
+                    size : size.toUpperCase()
                 }
                 addCart(obj)
             }else{

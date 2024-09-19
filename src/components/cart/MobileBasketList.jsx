@@ -19,7 +19,7 @@ function MobileBasketList({ item }) {
     const [deleteCart] = useDeleteCartMutation()
 
     async function handleDelete(){
-        await deleteCart(item.productId)
+        await deleteCart(item.id)
     }
 
     function handleChange(x){
@@ -28,7 +28,7 @@ function MobileBasketList({ item }) {
         }else{
             setCount(count + x)
             let productId = item.productId;
-            updateCart({ productId, count: x })
+            updateCart({ productId, count: (count + x)})
         }
     }
 

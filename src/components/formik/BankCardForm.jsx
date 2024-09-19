@@ -29,8 +29,7 @@ function BankCardForm({formikRef3}) {
                     .matches(/^\d{13,19}$/, 'Card Number must be between 13 and 19 digits'),
                 ex_date: Yup.string()
                     .required('Expiration Date is required')
-                    .matches(/^(0[1-9]|1[0-2])\/\d{2}$/, 'Expiration Date must be in MM/YY format')
-                    .test('is-valid-expiry', 'Expiration Date is invalid or expired', isValidExpiryDate),
+                    .matches(/^(0[1-9]|1[0-2])\/\d{2}$/, 'Expiration Date must be in MM/YY format'),
                 cvc_code: Yup.string()
                     .required('CVC Code is required')
                     .matches(/^\d{3,4}$/, 'CVC Code must be 3 or 4 digits'),

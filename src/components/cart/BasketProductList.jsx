@@ -25,13 +25,13 @@ function BasketProductList({ item }) {
         } else {
             setCount(count + x);
             let productId = item.productId;
-            updateCart({ productId, count: x })
+            updateCart({ productId, count: (count + x)})
         }
     }
 
 
     function handleDelete() {
-        deleteCart(item.productId)
+        deleteCart(item.id)
     }
 
     return (

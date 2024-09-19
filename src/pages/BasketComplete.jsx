@@ -81,7 +81,7 @@ function BasketComplete() {
                                         <span className='text-[0.875em] md:w-6/12 font-semibold'>Credit Card</span>
                                     </li>
                                     <li className='pt-5'>
-                                        <button className='bg-[#DC375F] text-white rounded-[80px] py-4 block w-full font-medium text-[1em]'>Purchase history</button>
+                                        <button onClick={() => navigate(`/account`)} className='bg-[#DC375F] text-white rounded-[80px] py-4 block w-full font-medium text-[1em]'>Purchase history</button>
                                     </li>
                                 </ul>
                             </div>
