@@ -17,7 +17,7 @@ function FilterComp() {
     const [drop2, setDrop2] = useState(false)
     const [drop3, setDrop3] = useState(false)
     const [drop4, setDrop4] = useState(false)
-    const [value, setValue] = useState([0, 10000])
+    const [value, setValue] = useState([0, 100000])
     const [brandId, setBrandId] = useState(0)
     const [categoryId, setCategoryId] = useState(0)
     const [discount, setDiscount] = useState(false)
@@ -39,7 +39,7 @@ function FilterComp() {
 
     const { data, isLoading, isFetching } = useFilterProductQuery({
         page: 1,
-        limit: 10,
+        limit: 20,
         sortBy: 'price',
         sortOrder: 'asc',
         categoryId: categoryId ? categoryId : '',

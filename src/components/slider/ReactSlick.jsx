@@ -1,8 +1,13 @@
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import Slider from "react-slick";
 import ProductCard from "../static/ProductCard";
+import Loading from "../static/Loading";
 
 const ReactSlick = forwardRef((props, ref) => {
+    const { arr } = props 
+
+    const [flag, setFlag] = useState(false)
+
     const settings = {
         dots: false,
         infinite: true,
@@ -11,11 +16,21 @@ const ReactSlick = forwardRef((props, ref) => {
         slidesToScroll: 1,
     };
 
+    useEffect(() => {
+        if(arr.length > 0){
+            setFlag(true)
+        }
+    }, [arr])
+
+    if(!flag){
+        return <Loading />
+    }
+
     return (
         <Slider ref={ref} {...settings}>
-            {Array.from({ length: 5 }).map((_, index) => (
+            {flag && arr.map((item, index) => (
                 <div key={index} className="px-3">
-                    <ProductCard x={index} />
+                    <ProductCard item={item} x={index} />
                 </div>
             ))}
         </Slider>

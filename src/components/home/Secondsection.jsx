@@ -2,10 +2,27 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import img from '../../assets/banner1.jfif'
 import TrendingBtns from '../static/TrendingBtns'
 import ReactSlick from '../slider/ReactSlick'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useFilterProductQuery } from '../../store/api'
 
 function Secondsection() {
     const sliderRef = useRef(null);
+
+    const [arr, setArr] = useState([])
+
+    const { data, isLoading } = useFilterProductQuery({
+        page: 1,
+        limit: 8,
+        sortBy: 'price',
+        sortOrder: 'asc',
+        categoryId: 33,
+    })
+
+    useEffect(() => {
+        if (!isLoading) {
+            setArr(data.data)
+        }
+    }, [isLoading, data])
 
     return (
         <section className='py-10'>
@@ -35,14 +52,14 @@ function Secondsection() {
                                     <FaChevronRight />
                                 </button>
                                 <h2 className='font-medium text-[1.125em] xl:mb-5 lg:text-[1.5em] mb-2 text-center'>Trending Products</h2>
-                                <div className='flex items-center justify-center gap-5'>
+                                {/* <div className='flex items-center justify-center gap-5'>
                                     <TrendingBtns txt={'Featured'} />
                                     <TrendingBtns txt={'Latest'} />
                                     <TrendingBtns txt={'Bestseller'} />
-                                </div>
+                                </div> */}
                             </div>
-                            <div>
-                                <ReactSlick ref={sliderRef} />
+                            <div className='pt-10'>
+                                {!isLoading && <ReactSlick arr={arr} ref={sliderRef} />}
                             </div>
                         </div>
                     </div>

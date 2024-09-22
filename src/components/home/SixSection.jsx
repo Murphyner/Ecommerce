@@ -4,12 +4,12 @@ import { useFilterProductQuery } from '../../store/api'
 import Loading from '../static/Loading'
 
 function SixSection() {
-    const { data, isLoading, isFetching } = useFilterProductQuery({
+    const { data, isLoading } = useFilterProductQuery({
         page: 1,
-        limit: 20,
+        limit: 12,
         sortBy: 'price',
-        sortOrder: 'asc'
-        // categoryId: categoryId ? categoryId : '',
+        sortOrder: 'asc',
+        categoryId: 31,
         // brandId: brandId ? brandId : '',
         // color: filterColor.length > 0 ? filterColor : '', 
         // size: filterSize.length > 0 ? filterSize : '',  

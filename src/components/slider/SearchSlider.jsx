@@ -12,8 +12,6 @@ const SearchSlider = forwardRef((props, ref) => {
         slidesToScroll: 1,
     };
 
-    console.log(arr)
-
     return (
         <Slider ref={ref} {...settings}>
             {arr.map((item, index) => (
