@@ -186,17 +186,6 @@ function Detail() {
                             </div>
                         </div>
                         <div className="pt-10">
-                            <div className="border-t border-b border-[#EAEAEA] gap-3 py-3 flex lg:gap-6 lg:flex-row lg:justify-center lg:py-5 flex-col">
-                                <div>
-                                    <p className="text-[#DC375F] text-[.95em] font-bold lg:font-medium cursor-pointer">Description</p>
-                                </div>
-                                <div>
-                                    <p className="text-[#BBBBBB] text-[.95em] font-bold lg:font-medium cursor-pointer">More Information</p>
-                                </div>
-                                <div>
-                                    <p className="text-[#BBBBBB] text-[.95em] font-bold lg:font-medium cursor-pointer">Reviews</p>
-                                </div>
-                            </div>
                             <div className="py-20">
                                 <div className="flex lg:flex-row flex-col lg:justify-between">
                                     <div className="w-full mb-5 lg:w-5/12">
@@ -220,7 +209,7 @@ function Detail() {
                                     </div>
                                     <div className="w-full lg:w-5/12">
                                         <div className="h-[460px] flex justify-end lg:h-[550px]">
-                                            <img src={data.images[0]} alt="" className="h-full" />
+                                            <img src={data.images[1]} alt="" className="h-full" />
                                         </div>
                                     </div>
                                 </div>

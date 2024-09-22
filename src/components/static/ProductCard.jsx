@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import img from '../../assets/products1.jfif'
-import { VscHeart } from 'react-icons/vsc'
-// import { IoEyeOutline } from 'react-icons/io5'
-import { FaRegStar, FaStar } from 'react-icons/fa'
+import { FaHeart, FaRegHeart, FaRegStar, FaStar } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
-// import { useAddCartMutation } from '../../store/api'
-// import { toast } from 'react-toastify'
-// import { useDispatch, useSelector } from 'react-redux'
-// import { setBasketFlag } from '../../store/BasketSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { setWishArr } from '../../store/WishlistSlice'
+import '../../card.css'
 
 function ProductCard({ x, item }) {
     const navigate = useNavigate()
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
+    const { wishArr } = useSelector(state => state.WishlistSlice)
 
-    // const token = localStorage.getItem("token")
+    const [flag, setFlag] = useState(() => {
+        const savedFlag = localStorage.getItem(`wish-${item?.id}`);
+        return savedFlag === 'true';
+    });
 
     let discount = 0
 
@@ -21,47 +22,44 @@ function ProductCard({ x, item }) {
         discount = ((item.discount / item.price) * 100).toFixed(0)
     }
 
-    // const [addCart, { isSuccess, isError }] = useAddCartMutation()
+    function handleAddWish() {
+        if (item) {
+            dispatch(setWishArr(item))
+            setFlag(!flag)
+        }
+    }
 
-    // const { basketFlag } = useSelector((state) => state.BasketSlice)
+    useEffect(() => {
+        localStorage.setItem("wish", JSON.stringify(wishArr))
+    }, [wishArr])
 
-    // function handleAddCart() {
-    //     if (token) {
-    //         let obj = {
-    //             productId: item.id,
+    useEffect(() => {
+        localStorage.setItem(`wish-${item?.id}`, flag); 
+    }, [flag]); 
 
-    //         }
-    //         addCart(obj)
-    //     } else {
-    //         navigate('/account')
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     if (isSuccess) {
-    //         toast.success("Added to cart", {
-    //             autoClose: 1000
-    //         })
-    //         dispatch(setBasketFlag(!basketFlag))
-    //     }
-    // }, [isSuccess, isError])
+    useEffect(() => {
+        const savedFlag = localStorage.getItem(`wish-${item?.id}`);
+        if (savedFlag) {
+            setFlag(savedFlag === 'true');
+        }
+    }, [item?.id]);
 
     return (
         <>
             <div className='py-2 card relative shadow-lg mb-4 rounded-lg overflow-hidden'>
-                <div className='h-48 sm:h-56 md:h-72 flex justify-center lg:h-64 xl:h-72 overflow-hidden relative'>
-                    <img className='h-full' src={item ? item.images[0] : img} alt="" />
+                <div className='h-48 sm:h-56 card-img bg-[#F1F1F1] md:h-72 flex flex-col justify-center lg:h-64 xl:h-72 overflow-hidden relative'>
+                    <img className='h-full w-full card-first' src={item ? item.images[0] : img} alt="" />
+                    <img className='h-full card-second' src={item ? item.images[1] : img} alt="" />
                     <ul className='absolute look duration-300 flex flex-col gap-2 xl:gap-4 z-10 top-[50%] translate-y-[-50%] right-[-50px]'>
                         <li>
-                            <button className='bg-white shadow-md border-black h-8 w-8 xl:h-10 xl:w-10 flex justify-center items-center rounded-[50px]'>
-                                <VscHeart />
+                            <button
+                                onClick={handleAddWish}
+                                className='bg-white shadow-md h-8 w-8 xl:h-10 xl:w-10 flex justify-center items-center rounded-[50px]'>
+                                {!flag ?
+                                    <FaRegHeart /> :
+                                    <FaHeart className={`text-red-600`} />}
                             </button>
                         </li>
-                        {/* <li>
-                            <button onClick={() => navigate(`/detail/${item.id}`)} className='bg-white shadow-md h-8 w-8 xl:h-10 xl:w-10 flex justify-center items-center rounded-[50px]'>
-                                <IoEyeOutline />
-                            </button>
-                        </li> */}
                     </ul>
                     <div className={`absolute ${item?.discount ? 'flex' : 'hidden'} z-10 right-2 top-2 h-10 rounded-full p-1 items-center justify-center text-[0.875em] text-white w-10 bg-red-500`}>{discount} <span>&nbsp;</span> <span className='text-[0.775em]'>%</span> </div>
                 </div>

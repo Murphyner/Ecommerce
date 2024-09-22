@@ -8,9 +8,9 @@ function MobileBasketList({ item }) {
 
     let man = 0
 
-    const [updateCart] = useUpdateCartMutation()
+    const [updateCart, {isLoading}] = useUpdateCartMutation()
 
-    if(item.discount){
+    if(item.product_id.discount){
         man = (item.product_id.price - item.product_id.discount).toFixed(2)
     }else{
         man = item.product_id.price
@@ -42,17 +42,18 @@ function MobileBasketList({ item }) {
             <div className='w-6/12 px-3'>
                 <div className='flex gap-2 flex-col'>
                     <h5 className='text-[0.875em] font-semibold'>{item.product_id.name}</h5>
-                    <p className='text-[#6C7275] text-[0.75em] font-normal'>Color: Black</p>
+                    <p className='text-[#6C7275] text-[0.75em] capitalize font-normal'>Color: {item.Color.toLowerCase()}</p>
+                    <p className='text-[#6C7275] text-[0.75em] capitalize font-normal'>Color: {item.Size.toLowerCase()}</p>
                     <div className='flex border border-[#6C7275] px-3 py-2 rounded items-center w-20 justify-between'>
                         <button 
                         onClick={() => handleChange(-1)}
-                        className='text-[#121212]'>
+                        className={`text-[#121212] ${isLoading && 'cursor-not-allowed'}`}>
                             <HiMiniMinusSmall />
                         </button>
                         <span className='font-semibold text-[0.75em] text-[#121212]'>{count}</span>
                         <button 
                         onClick={() => handleChange(1)}
-                        className='text-[#121212]'>
+                        className={`text-[#121212] ${isLoading && 'cursor-not-allowed'}`}>
                             <HiOutlinePlusSmall />
                         </button>
                     </div>

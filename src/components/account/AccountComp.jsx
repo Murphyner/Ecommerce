@@ -13,8 +13,6 @@ function AccountComp() {
 
     const {img} = useSelector(state => state.accountSlice)
 
-    console.log(img)
-
     const [updateUser , {data, isSuccess}] = useUpdateUserMutation()
 
     useEffect(() => {
@@ -47,7 +45,6 @@ function AccountComp() {
             updateUser(obj)
         }
     };
-
 
     return (
         <div>

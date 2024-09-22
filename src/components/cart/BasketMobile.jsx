@@ -49,7 +49,7 @@ function BasketMobile() {
             ) : (
                 <div className='text-center mb-10'>
                     <p className='text-lg font-semibold mb-4'>Your basket is empty</p>
-                    <Link to="/products" className="bg-[#DC375F] text-white py-2 px-4 rounded">
+                    <Link to="/products/all" className="bg-[#DC375F] text-white py-2 px-4 rounded">
                         Go to Shop
                     </Link>
                 </div>

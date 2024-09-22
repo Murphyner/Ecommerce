@@ -6,12 +6,9 @@ import * as Yup from 'yup';
 import { useLoginUserMutation } from "../../store/api";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setBasket } from "../../store/BasketSlice";
 
 function LoginForm({ setChange }) {
     const [flag, setFlag] = useState(false)
-
-    const dispatch = useDispatch()
 
     const [loginUser, { data, isError }] = useLoginUserMutation()
     const navigate = useNavigate()

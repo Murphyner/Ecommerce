@@ -1,10 +1,22 @@
 import React from 'react'
 import ProductCard from '../static/ProductCard'
-import { useAllProductQuery } from '../../store/api'
+import { useFilterProductQuery } from '../../store/api'
 import Loading from '../static/Loading'
 
 function SixSection() {
-    const {data , isLoading} = useAllProductQuery()
+    const { data, isLoading, isFetching } = useFilterProductQuery({
+        page: 1,
+        limit: 20,
+        sortBy: 'price',
+        sortOrder: 'asc'
+        // categoryId: categoryId ? categoryId : '',
+        // brandId: brandId ? brandId : '',
+        // color: filterColor.length > 0 ? filterColor : '', 
+        // size: filterSize.length > 0 ? filterSize : '',  
+        // minPrice: value[0],
+        // maxPrice: value[1],
+        // discount: discount ? discount : ''
+    })
 
     if(isLoading){
         return <Loading />

@@ -151,11 +151,11 @@ function Checkout() {
                                         </li>
                                         <li className='flex border-[#E8ECEF] border-b py-4 justify-between items-center'>
                                             <span className='text-[1em] font-normal'>Subtotal</span>
-                                            <span className='text-[1em] font-semibold'>$ {sum}</span>
+                                            <span className='text-[1em] font-semibold'>$ {sum.toFixed(2)}</span>
                                         </li>
                                         <li className='flex pt-4 justify-between items-center'>
                                             <span className='text-[1.25em] font-medium'>Total</span>
-                                            <span className='text-[1.25em] font-medium'>$ {totalSum}</span>
+                                            <span className='text-[1.25em] font-medium'>$ {totalSum.toFixed(2)}</span>
                                         </li>
                                     </ul>
                                 </div>

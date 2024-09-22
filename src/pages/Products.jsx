@@ -11,9 +11,10 @@ function Products() {
     const [flag, setFlag] = useState(false)
     const flagScheme = { flag, setFlag }
 
+
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1024)
 
-    const { filterData, load } = useSelector(state => state.FilterSlice)
+    const { filterData, load, opacity } = useSelector(state => state.FilterSlice)
 
     useEffect(() => {
         const handleResize = () => {
@@ -72,16 +73,16 @@ function Products() {
                             </button>
                         </div>
                         <div className='pt-10 flex flex-wrap items-start'>
-                            <div className='hidden md:block md:w-3/12'>
-                                <div>
+                            <div className='hidden relative md:block md:w-3/12'>
+                                <div className={`${opacity ? 'opacity-[0.5]' : 'opacity-[1]'}`}>
                                     <h2 className='font-medium mb-4 text-[2.2em]'>Filter</h2>
-                                    <FilterComp />
+                                    <FilterComp  />
                                 </div>
                             </div>
                             <div className='flex w-full md:w-9/12 md:pl-4 flex-wrap'>
                                 {load ? <Loading /> : (
                                     filterData.map((item, index) => (
-                                        <div key={nanoid()} className='w-6/12 lg:w-4/12 px-2'>
+                                        <div key={nanoid()} className='w-6/12 lg:w-4/12 px-5'>
                                             <ProductCard item={item} x={index % 2 ? 2 : 3} />
                                         </div>
                                     ))

@@ -4,7 +4,9 @@ export const FilterSlice = createSlice({
     name : "FilterSlice",
     initialState : {
         filterData : [],
-        load : true
+        load : true,
+        opacity : false,
+        catId : 0
     },
     reducers : {
         setFilterData : (state, action) => {
@@ -12,9 +14,15 @@ export const FilterSlice = createSlice({
         },
         setLoad : (state, action) => {
             state.load = action.payload
+        },
+        setOpacity : (state, action) => {
+            state.opacity = action.payload
+        },
+        setCategoryId : (state, action) => {
+            state.catId = action.payload
         }
     }
 })
 
-export const { setFilterData, setLoad } = FilterSlice.actions
+export const { setFilterData, setLoad, setOpacity, setCategoryId } = FilterSlice.actions
 export default FilterSlice.reducer

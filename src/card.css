@@ -1,0 +1,18 @@
+.card-img:hover .card-first {
+    opacity: 0;
+}
+
+.card-first{
+    transition: .3s;
+    transform: translateY(50%);
+}
+
+.card-second{
+    opacity: 0;
+    transition: .3s;
+    transform: translateY(-50%);
+}
+
+.card-img:hover .card-second {
+    opacity: 1;
+}

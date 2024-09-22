@@ -4,7 +4,7 @@ const token = localStorage.getItem("token")
 
 export const api = createApi({
     reducerPath: "api",
-    baseQuery: fetchBaseQuery({ baseUrl: "https://ecommerse.davidhtml.xyz/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "https://e-commerse-back-j1bp.vercel.app/" }),
     tagTypes: ['Category', 'Brand', 'Product', 'Cart'],
     endpoints: (builder) => ({
         loginUser: builder.mutation({
@@ -218,7 +218,7 @@ export const api = createApi({
             }),
             invalidatesTags: ['Product']
         }),
-        searchProduct: builder.query({
+        filterProduct: builder.query({
             query: (params) => {
                 const {
                     page,
@@ -234,48 +234,29 @@ export const api = createApi({
                     maxPrice,
                     discount
                 } = params;
-                
-                const queryParams = new URLSearchParams({
-                    page: String(page),
-                    limit: String(limit),
-                    sortBy,
-                    sortOrder,
-                });
 
-                // Koşullu parametreler ekliyoruz
-                if (categoryId) queryParams.append('categoryId', categoryId);
-                if (subcategoryId) queryParams.append('subcategoryId', subcategoryId);
-                if (brandId) queryParams.append('brandId', brandId);
-                if (minPrice) queryParams.append('minPrice', String(minPrice));
-                if (maxPrice) queryParams.append('maxPrice', String(maxPrice));
-                if (discount) queryParams.append('discount', String(discount));
+                const colorStr = color.length > 0 ? color.join(',') : '';
+                const sizeStr = size.length > 0 ? size.join(',') : '';
 
-                // Dizi olan color ve size parametreleri
-                if (color.length > 0) queryParams.append('color', color.join(','));
-                if (size.length > 0) queryParams.append('size', size.join(','));
+                let url = `products/all?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
 
-                // Query parametrelerini URL'e ekliyoruz
-                const url = `products/all?${queryParams.toString()}`;
+                if (categoryId) url += `&categoryId=${categoryId}`;
+                if (subcategoryId) url += `&subcategoryId=${subcategoryId}`;
+                if (brandId) url += `&brandId=${brandId}`;
+                if (minPrice) url += `&minPrice=${minPrice}`;
+                if (maxPrice) url += `&maxPrice=${maxPrice}`;
+                if (discount) url += `&discount=${discount}`;
 
-                return url; // URL'yi döndür
+                if (colorStr) url += `&color=${colorStr}`;
+                if (sizeStr) url += `&size=${sizeStr}`;
 
-                // const colorStr = color.length > 0 ? color.join(',') : '';
-                // const sizeStr = size.length > 0 ? size.join(',') : '';
-
-                // let url = `products/all?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
-
-                // if (categoryId) url += `&categoryId=${categoryId}`;
-                // if (subcategoryId) url += `&subcategoryId=${subcategoryId}`;
-                // if (brandId) url += `&brandId=${brandId}`;
-                // if (minPrice) url += `&minPrice=${minPrice}`;
-                // if (maxPrice) url += `&maxPrice=${maxPrice}`;
-                // if (discount) url += `&discount=${discount}`;
-
-                // if (colorStr) url += `&color=${colorStr}`;
-                // if (sizeStr) url += `&size=${sizeStr}`;
-
-                // return url; 
+                return url; 
             },
+        }),
+        searchProduct : builder.query({
+            query : (q) => ({
+                url : `/products/search?q=${q}`
+            })
         }),
         allCart: builder.query({
             query: () => ({
@@ -344,10 +325,11 @@ export const {
     useUploadFileMutation,
     useAddProductMutation,
     useAllProductQuery,
+    useSearchProductQuery,
     useDeleteProductMutation,
     useGetProductByIdQuery,
     useEditProductMutation,
-    useSearchProductQuery,
+    useFilterProductQuery,
     useAllCartQuery,
     useAddCartMutation,
     useDeleteCartMutation,

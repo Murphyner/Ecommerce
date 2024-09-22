@@ -31,7 +31,8 @@ export const route = createBrowserRouter(
                     </AccountAuth>
                 } />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/products" element={<Products />} />
+                <Route path="/products/all" element={<Products />} />
+                <Route path="/products/:category" element={<Products />} />
                 <Route path="/detail/:id" element={<Detail />} />
             </Route>
             <Route path="/admin" element={

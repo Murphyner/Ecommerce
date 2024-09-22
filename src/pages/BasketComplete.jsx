@@ -1,12 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaCheck } from 'react-icons/fa'
 import { MdChevronLeft } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
-import img from '../assets/products1.jfif'
 import { nanoid } from '@reduxjs/toolkit'
+import { useSelector } from 'react-redux'
 
 function BasketComplete() {
     const navigate = useNavigate()
+
+    const [arr, setArr] = useState([])
+
+    const {basket,totalSum} = useSelector(state => state.BasketSlice)
+
+    console.log(basket)
+
+    useEffect(() => {
+        if(basket.length > 0){
+            setArr(basket)
+        }
+    }, [basket])
+
     return (
         <main className='pb-10'>
             <div className="container 2xl:w-[1280px] mx-auto md:px-4">
@@ -53,10 +66,10 @@ function BasketComplete() {
                                 <h2 className='text-[2.1em] font-medium w-[50%] md:text-[2.5em] md:w-[70%] md:text-center mx-auto leading-10'>Your order has been received</h2>
                             </div>
                             <div className='flex mb-8 lg:w-[60%] lg:mx-auto flex-wrap'>
-                                {Array.from({ length: 3 }).map((_, index) => (
+                                {arr.length > 0 && arr.map((item, index) => (
                                     <div key={nanoid()} className='w-4/12 md:flex md:justify-center px-1'>
                                         <div className='h-20 w-20 relative'>
-                                            <img src={img} className='w-full h-full' />
+                                            <img src={item.product_id.images[0]} className='w-full h-full' />
                                             <span className='w-4 absolute top-[-10px] right-[-5px] text-[0.625em] font-semibold h-4 flex justify-center items-center bg-[#DC375F] text-white rounded-[50px]'>2</span>
                                         </div>
                                     </div>

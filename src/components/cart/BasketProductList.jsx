@@ -7,11 +7,13 @@ function BasketProductList({ item }) {
     let element = item.product_id
     let man = 1
 
+    console.log(item)
+
     const [count, setCount] = useState(item.count)
 
     const [deleteCart] = useDeleteCartMutation()
 
-    const [updateCart] = useUpdateCartMutation()
+    const [updateCart, {isLoading}] = useUpdateCartMutation()
 
     if (element.discount) {
         man = (element.price - element.discount).toFixed(2)
@@ -29,7 +31,6 @@ function BasketProductList({ item }) {
         }
     }
 
-
     function handleDelete() {
         deleteCart(item.id)
     }
@@ -43,7 +44,8 @@ function BasketProductList({ item }) {
                     </div>
                     <div className='flex flex-col justify-between'>
                         <h5 className='text-[0.875em] font-semibold'>{element.name.slice(0, 20)}</h5>
-                        <p className='text-[#6C7275] text-[0.75em] font-normal'>Color: Black</p>
+                        <p className='text-[#6C7275] text-[0.75em] capitalize font-normal'>Color: {item.Color.toLowerCase()}</p>
+                        <p className='text-[#6C7275] text-[0.75em] capitalize font-normal'>Size: {item.Size.toLowerCase()}</p>
                         <button
                             onClick={handleDelete}
                             className='text-[#6C7275] flex items-center gap-2'>
@@ -58,13 +60,13 @@ function BasketProductList({ item }) {
                     <div className='flex border border-[#6C7275] px-3 py-2 rounded items-center w-20 justify-between'>
                         <button
                             onClick={() => handleCount(-1)}
-                            className='text-[#121212]'>
+                            className={`text-[#121212] ${isLoading && 'cursor-not-allowed'}`}>
                             <HiMiniMinusSmall />
                         </button>
                         <span className='font-semibold text-[0.75em] text-[#121212]'>{count}</span>
                         <button
                             onClick={() => handleCount(1)}
-                            className='text-[#121212]'>
+                            className={`text-[#121212] ${isLoading && 'cursor-not-allowed'}`}>
                             <HiOutlinePlusSmall />
                         </button>
                     </div>

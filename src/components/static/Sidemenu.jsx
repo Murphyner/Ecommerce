@@ -1,8 +1,11 @@
 import React from 'react'
 import { RiCloseLargeFill } from 'react-icons/ri'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { setCategoryId } from '../../store/FilterSlice'
 
 function Sidemenu({ flagSchema }) {
+    const dispatch = useDispatch()
     const { flag, setFlag } = flagSchema
     const cl = 'fixed inset-0 duration-300 border-r border-[#333] bg-white lg:hidden'
     const active = 'z-[999] translate-x-0'
@@ -29,7 +32,7 @@ function Sidemenu({ flagSchema }) {
                             </Link>
                         </li>
                         <li className='mb-2'>
-                            <Link onClick={() => setFlag(!flag)} to={'/products'} className='font-normal text-[0.875em] py-[6px] px-4'>
+                            <Link onClick={() => {setFlag(!flag), dispatch(setCategoryId(0))}} to={'/products/all'} className='font-normal text-[0.875em] py-[6px] px-4'>
                                 Products
                             </Link>
                         </li>

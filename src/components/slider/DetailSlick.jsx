@@ -31,7 +31,7 @@ function DetailSlick({img, price, dis}) {
         <div className="slider-container">
             <Slider {...settings}>
                 {img.map((item, i) => {
-                    return <div className="bg-[#F7F7F7] relative !flex justify-center items-center rounded-md lg:h-[570px] h-[360px]" key={i}>
+                    return <div className="bg-[#f1f1f1] relative !flex justify-center items-center rounded-md lg:h-[570px] h-[360px]" key={i}>
                         <img className="rounded-md h-full lg:object-cover" src={`${item}`} />
                         <span className="bg-[#333333] absolute top-3 left-3 rounded text-white py-1 px-[14px] uppercase block font-bold">new</span>
                         <span className={`bg-[#38CB89] absolute top-12 left-3 rounded text-white ${dis ? 'block' : 'hidden'} py-1 px-[14px] uppercase font-bold`}>-{discount}%</span>

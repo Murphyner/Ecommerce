@@ -2,10 +2,10 @@ import { nanoid } from '@reduxjs/toolkit'
 import React, { useEffect, useState } from 'react'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import InputRange from '../slider/InputRange'
-import { useAllBrandQuery, useAllCategoryQuery, useSearchProductQuery } from '../../store/api'
+import { useAllBrandQuery, useAllCategoryQuery, useFilterProductQuery } from '../../store/api'
 import { eColors, eSize } from '../../enum/Enum'
-import { useDispatch } from 'react-redux'
-import { setFilterData, setLoad } from '../../store/FilterSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { setFilterData, setLoad, setOpacity } from '../../store/FilterSlice'
 import FilterColor from './FilterColor'
 import FilterSize from './FilterSize'
 
@@ -17,7 +17,7 @@ function FilterComp() {
     const [drop2, setDrop2] = useState(false)
     const [drop3, setDrop3] = useState(false)
     const [drop4, setDrop4] = useState(false)
-    const [value, setValue] = useState([0, 3000])
+    const [value, setValue] = useState([0, 10000])
     const [brandId, setBrandId] = useState(0)
     const [categoryId, setCategoryId] = useState(0)
     const [discount, setDiscount] = useState(false)
@@ -29,7 +29,15 @@ function FilterComp() {
 
     const dispatch = useDispatch()
 
-    const { data, isLoading } = useSearchProductQuery({
+    const {catId} = useSelector(state => state.FilterSlice)
+
+    useEffect(() => {
+        if(catId){
+            setCategoryId(catId)
+        }
+    }, [catId])
+
+    const { data, isLoading, isFetching } = useFilterProductQuery({
         page: 1,
         limit: 10,
         sortBy: 'price',
@@ -47,8 +55,9 @@ function FilterComp() {
         if (!isLoading && data) {
             dispatch(setFilterData(data.data));
             dispatch(setLoad(isLoading));
+            dispatch(setOpacity(isFetching))
         }
-    }, [data, isLoading]);
+    }, [data, isLoading, isFetching]);
 
     return (
         <ul>

@@ -36,7 +36,7 @@ function RegisterForm({ setChange }) {
     }
 
     useEffect(() => {
-        if(isSuccess){
+        if (isSuccess) {
             localStorage.clear()
             localStorage.setItem("token", data.token)
             localStorage.setItem("user", JSON.stringify(data.user))
@@ -44,7 +44,7 @@ function RegisterForm({ setChange }) {
             navigate(`/account`)
             window.location.reload()
         }
-    },[data, isError, isSuccess])
+    }, [data, isError, isSuccess])
 
     return (
         <Formik
@@ -68,8 +68,7 @@ function RegisterForm({ setChange }) {
                     .max(20, 'Username must be 20 characters or less')
                     .matches(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'),
                 phone: Yup.string()
-                    .required('Phone number is required')
-                    .matches(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
+                    .required('Phone number is required'),
                 gender: Yup.string()
                     .required('Phone number is required'),
                 email: Yup.string()
