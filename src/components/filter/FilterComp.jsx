@@ -5,7 +5,7 @@ import InputRange from '../slider/InputRange'
 import { useAllBrandQuery, useAllCategoryQuery, useFilterProductQuery } from '../../store/api'
 import { eColors, eSize } from '../../enum/Enum'
 import { useDispatch, useSelector } from 'react-redux'
-import { setFilterData, setLoad, setOpacity } from '../../store/FilterSlice'
+import { setFilterData, setLoad, setOpacity, setTotalProduct } from '../../store/FilterSlice'
 import FilterColor from './FilterColor'
 import FilterSize from './FilterSize'
 
@@ -29,7 +29,7 @@ function FilterComp() {
 
     const dispatch = useDispatch()
 
-    const {catId} = useSelector(state => state.FilterSlice)
+    const {catId, page} = useSelector(state => state.FilterSlice)
 
     useEffect(() => {
         if(catId){
@@ -38,10 +38,10 @@ function FilterComp() {
     }, [catId])
 
     const { data, isLoading, isFetching } = useFilterProductQuery({
-        page: 1,
-        limit: 20,
+        page: page,
+        limit: 9,
         sortBy: 'price',
-        sortOrder: 'asc',
+        sortOrder: 'csa',
         categoryId: categoryId ? categoryId : '',
         brandId: brandId ? brandId : '',
         color: filterColor.length > 0 ? filterColor : '', 
@@ -54,6 +54,7 @@ function FilterComp() {
     useEffect(() => {
         if (!isLoading && data) {
             dispatch(setFilterData(data.data));
+            dispatch(setTotalProduct(data.meta.totalProducts))
             dispatch(setLoad(isLoading));
             dispatch(setOpacity(isFetching))
         }

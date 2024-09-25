@@ -4,17 +4,21 @@ import ProductCard from '../components/static/ProductCard'
 import FilterSide from '../components/filter/FilterSide'
 import { useEffect, useState } from 'react'
 import FilterComp from '../components/filter/FilterComp'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Loading from '../components/static/Loading'
+import { Pagination } from '@mui/material'
+import { setPage } from '../store/FilterSlice'
+import { useAllProductQuery } from '../store/api'
 
 function Products() {
     const [flag, setFlag] = useState(false)
     const flagScheme = { flag, setFlag }
 
+    const dispatch = useDispatch()
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1024)
 
-    const { filterData, load, opacity } = useSelector(state => state.FilterSlice)
+    const { filterData, load, opacity,totalProduct, page } = useSelector(state => state.FilterSlice)
 
     useEffect(() => {
         const handleResize = () => {
@@ -76,17 +80,22 @@ function Products() {
                             <div className='hidden relative md:block md:w-3/12'>
                                 <div className={`${opacity ? 'opacity-[0.5]' : 'opacity-[1]'}`}>
                                     <h2 className='font-medium mb-4 text-[2.2em]'>Filter</h2>
-                                    <FilterComp  />
+                                    <FilterComp />
                                 </div>
                             </div>
-                            <div className='flex w-full md:w-9/12 md:pl-4 flex-wrap'>
+                            <div className='flex flex-col w-full md:w-9/12 md:pl-4'>
                                 {load ? <Loading /> : (
-                                    filterData.map((item, index) => (
-                                        <div key={nanoid()} className='w-6/12 lg:w-4/12 px-5'>
-                                            <ProductCard item={item} x={index % 2 ? 2 : 3} />
-                                        </div>
-                                    ))
+                                    <div className='flex w-full flex-wrap'>
+                                        {filterData.map((item, index) => (
+                                            <div key={nanoid()} className='w-6/12 lg:w-4/12 px-5'>
+                                                <ProductCard item={item} x={index % 2 ? 2 : 3} />
+                                            </div>
+                                        ))}
+                                    </div>
                                 )}
+                                <div className='flex justify-center w-full my-4'>
+                                    <Pagination page={page} onChange={(event, value) => dispatch(setPage(value))} count={Math.ceil(totalProduct / 9)} />
+                                </div>
                             </div>
                         </div>
                         <div className='py-10 border-t border-b border-[#CBCBCB]'>

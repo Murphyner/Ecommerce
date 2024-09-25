@@ -31,10 +31,10 @@ function Thirdsection() {
                                             src={
                                                 index === 0 ? dress : 
                                                 index === 1 ? coat :
-                                                index === 2 ? blouse : 
-                                                index === 3 ? pants : 
-                                                index === 4 ? underwear : 
-                                                index === 5 ? tshirt : ''
+                                                index === 2 ? pants : 
+                                                index === 3 ? underwear : 
+                                                index === 4 ? tshirt : 
+                                                index === 5 ? blouse : ''
                                             } 
                                             className='w-full h-full' alt="" />
                                         </div>

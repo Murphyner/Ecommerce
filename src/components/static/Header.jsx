@@ -88,7 +88,7 @@ function Header() {
     }
 
     return (
-        <header className='px-8 py-4 md:px-0 sticky z-[999] top-0 bg-white shadow-md'>
+        <header className='px-8 py-4 md:px-0 sticky z-[900] top-0 bg-white shadow-md'>
             <Sidemenu flagSchema={flagSchema} />
             {overlay && <SearchOverlay value={value} />}
             <div className="container 2xl:w-[1280px] mx-auto md:px-4">

@@ -12,8 +12,6 @@ function BasketComplete() {
 
     const {basket,totalSum} = useSelector(state => state.BasketSlice)
 
-    console.log(basket)
-
     useEffect(() => {
         if(basket.length > 0){
             setArr(basket)
@@ -65,7 +63,7 @@ function BasketComplete() {
                                 <h4 className='text-[#6C7275] md:text-center md:text-[1.75em] font-semibold text-[1em] mb-4'>Thank you! 🎉</h4>
                                 <h2 className='text-[2.1em] font-medium w-[50%] md:text-[2.5em] md:w-[70%] md:text-center mx-auto leading-10'>Your order has been received</h2>
                             </div>
-                            <div className='flex mb-8 lg:w-[60%] lg:mx-auto flex-wrap'>
+                            <div className='flex mb-8 justify-center lg:w-[60%] lg:mx-auto flex-wrap'>
                                 {arr.length > 0 && arr.map((item, index) => (
                                     <div key={nanoid()} className='w-4/12 md:flex md:justify-center px-1'>
                                         <div className='h-20 w-20 relative'>
@@ -83,7 +81,7 @@ function BasketComplete() {
                                     </li>
                                     <li className='py-4 flex flex-col md:flex-row md:border-0  gap-2 border-b border-[#E8ECEF]'>
                                         <p className='text-[0.875em] md:w-6/12 font-semibold text-[#6C7275]'>Date:</p>
-                                        <span className='text-[0.875em] md:w-6/12 font-semibold'>October 19, 2023</span>
+                                        <span className='text-[0.875em] md:w-6/12 font-semibold'>{new Date().getDate()}/{new Date().getMonth() + 1}/{new Date().getFullYear()}</span>
                                     </li>
                                     <li className='py-4 flex flex-col md:flex-row md:border-0 gap-2 border-b border-[#E8ECEF]'>
                                         <p className='text-[0.875em] md:w-6/12 font-semibold text-[#6C7275]'>Total:</p>

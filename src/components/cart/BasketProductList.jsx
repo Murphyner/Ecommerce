@@ -7,8 +7,6 @@ function BasketProductList({ item }) {
     let element = item.product_id
     let man = 1
 
-    console.log(item)
-
     const [count, setCount] = useState(item.count)
 
     const [deleteCart] = useDeleteCartMutation()
@@ -38,8 +36,8 @@ function BasketProductList({ item }) {
     return (
         <div className='flex py-4 border-b border-[#E8ECEF]'>
             <div className='w-5/12'>
-                <div className='flex justify-between lg:justify-start lg:gap-4'>
-                    <div className='w-20 h-20'>
+                <div className='flex justify-between items-center lg:justify-start lg:gap-4'>
+                    <div className='w-16 rounded-sm overflow-hidden h-16'>
                         <img src={element.images[0]} alt="" className='w-full h-full' />
                     </div>
                     <div className='flex flex-col justify-between'>
