@@ -47,7 +47,7 @@ function ProductCard({ x, item }) {
     return (
         <>
             <div className='py-2 card relative shadow-lg mb-4 rounded-lg overflow-hidden'>
-                <div className='h-48 sm:h-56 card-img bg-[#F1F1F1] md:h-72 flex flex-col justify-center lg:h-64 xl:h-72 overflow-hidden relative'>
+                <div className='h-48 sm:h-56 card-img bg-[#F1F1F1] md:h-72 rounded-ss-lg rounded-se-lg flex flex-col justify-center lg:h-64 xl:h-72 overflow-hidden relative'>
                     <img className='h-full w-full card-first' src={item ? item.images[0] : img} alt="" />
                     <img className='h-full card-second' src={item ? item.images[1] : img} alt="" />
                     <ul className='absolute look duration-300 flex flex-col gap-2 xl:gap-4 z-10 top-[50%] translate-y-[-50%] right-[-50px]'>

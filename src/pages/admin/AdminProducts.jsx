@@ -1,19 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
 import AdminProductList from '../../components/admin/AdminProductList'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAddProductFlag } from '../../store/ProductModalSlice'
 import AddProductModal from '../../components/admin/modal/product/AddProductModal'
 import DeleteProductModal from '../../components/admin/modal/product/DeleteProductModal'
-import { useAllProductQuery } from '../../store/api'
+import { useAllProductQuery, useFilterProductQuery } from '../../store/api'
 import { nanoid } from '@reduxjs/toolkit'
 import EditProductModal from '../../components/admin/modal/product/EditProductModal'
+import { Pagination } from '@mui/material'
 
 function AdminProducts() {
+    const [page, setPage] = useState(1)
     const dispatch = useDispatch()
     const { addProductFlag, deleteProductFlag, editProductFlag } = useSelector((state) => state.productModal)
 
-    const {data, isLoading} = useAllProductQuery()
+    const { data, isLoading } = useFilterProductQuery({
+        page: page,
+        limit: 10,
+        sortBy: 'price',
+        sortOrder: 'csa',
+    })
 
     return (
         <div className='py-5 min-h-[100vh]'>
@@ -41,11 +48,29 @@ function AdminProducts() {
                         <span className='text-left w-[20%] text-sm font-medium uppercase text-gray-400'>Actions</span>
                     </li>
                     {!isLoading &&
-                        data?.data.map((item, i) => (
+                        data.data.map((item, i) => (
                             <AdminProductList item={item} key={nanoid()} i={i} />
                         ))
                     }
                 </ul>
+                {!isLoading &&
+                    <div className='flex justify-center pt-5'>
+                        <Pagination
+                            page={page}
+                            onChange={(event, value) => setPage(value)}
+                            count={Math.ceil(data.meta.totalProducts / 10)}
+                            sx={{
+                                '& .MuiPaginationItem-root': {
+                                    color: 'white',
+                                },
+                                '& .Mui-selected': {
+                                    backgroundColor: 'white !important',
+                                    color: '#000'
+                                },
+                            }}
+                        />
+                    </div>
+                }
             </div>
         </div>
     )

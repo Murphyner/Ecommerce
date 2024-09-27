@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loading from '../components/static/Loading'
 import { Pagination } from '@mui/material'
 import { setPage } from '../store/FilterSlice'
-import { useAllProductQuery } from '../store/api'
 
 function Products() {
     const [flag, setFlag] = useState(false)

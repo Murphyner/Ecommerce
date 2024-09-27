@@ -3,7 +3,7 @@ import React from "react";
 import Slider from "react-slick";
 import ProductCard from "../static/ProductCard";
 
-function ResponsiveSlick() {
+function ResponsiveSlick({arr}) {
     var settings = {
         dots: true,
         infinite: true,
@@ -40,9 +40,9 @@ function ResponsiveSlick() {
     return (
         <div className="slider-container">
             <Slider {...settings}>
-                {Array.from({ length: 9 }).map((_, index) => (
+                {arr.map((item, index) => (
                     <div key={nanoid()} className="px-3">
-                        <ProductCard x={index % 2 ? 3 : 4} />
+                        <ProductCard item={item} x={index % 2 ? 3 : 4} />
                     </div>
                 ))}
             </Slider>
