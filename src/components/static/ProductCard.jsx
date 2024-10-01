@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import img from '../../assets/products1.jfif'
 import { FaHeart, FaRegHeart, FaRegStar, FaStar } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'

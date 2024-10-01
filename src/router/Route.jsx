@@ -15,6 +15,7 @@ import AdminProducts from "../pages/admin/AdminProducts";
 import AdminCategory from "../pages/admin/AdminCategory";
 import AdminBrands from "../pages/admin/AdminBrands";
 import AccountAuth from "../components/auth/AccountAuth";
+import Error from "../pages/Error";
 
 export const route = createBrowserRouter(
     createRoutesFromElements(
@@ -44,6 +45,7 @@ export const route = createBrowserRouter(
                 <Route path="category" element={<AdminCategory />} />
                 <Route path="brands" element={<AdminBrands />} />
             </Route>
+            <Route path="*" element={<Error />} />
         </>
     )
 )
