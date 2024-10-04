@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { FaHeart, FaRegHeart, FaRegStar, FaStar } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
+import '../../card.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { setWishArr } from '../../store/WishlistSlice'
-import '../../card.css'
+import { toast, ToastContainer } from 'react-toastify'
 
 function ProductCard({ x, item }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
     const { wishArr } = useSelector(state => state.WishlistSlice)
 
-    const [flag, setFlag] = useState(() => {
-        const savedFlag = localStorage.getItem(`wish-${item?.id}`);
-        return savedFlag === 'true';
-    });
+    const token = localStorage.getItem("token")
+
+    const isInWishList = wishArr.some(wishItem => wishItem.id === item.id); 
+    const [flag, setFlag] = useState(isInWishList); 
 
     let discount = 0
 
@@ -21,27 +23,18 @@ function ProductCard({ x, item }) {
         discount = ((item.discount / item.price) * 100).toFixed(0)
     }
 
+    useEffect(() => {
+        setFlag(isInWishList); 
+    }, [isInWishList]);
+
     function handleAddWish() {
-        if (item) {
-            dispatch(setWishArr(item))
-            setFlag(!flag)
+        if (!token) {
+            toast.error("Please register")
+            return;
         }
+        dispatch(setWishArr(item)); 
+        setFlag(!flag); 
     }
-
-    useEffect(() => {
-        localStorage.setItem("wish", JSON.stringify(wishArr))
-    }, [wishArr])
-
-    useEffect(() => {
-        localStorage.setItem(`wish-${item?.id}`, flag); 
-    }, [flag]); 
-
-    useEffect(() => {
-        const savedFlag = localStorage.getItem(`wish-${item?.id}`);
-        if (savedFlag) {
-            setFlag(savedFlag === 'true');
-        }
-    }, [item?.id]);
 
     return (
         <>

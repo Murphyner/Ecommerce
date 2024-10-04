@@ -21,19 +21,22 @@ function Header() {
     const [flag, setFlag] = useState(false)
     const flagSchema = { flag, setFlag }
 
+    const {wishArr} = useSelector(state => state.WishlistSlice)
+
+    const [wishlist, setWishlist] = useState([])
+
+    
     const [overlay, setOverlay] = useState(false)
     const [value, setValue] = useState('')
-
+    
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { wishArr } = useSelector(state => state.WishlistSlice)
-
+    
+    
     useEffect(() => {
-        const storedWishArr = JSON.parse(localStorage.getItem('wish'));
-        if (storedWishArr && storedWishArr.length > 0) {
-            storedWishArr.forEach(item => dispatch(setWishArr(item)));
-        }
-    }, [dispatch]);
+        const w = JSON.parse(localStorage.getItem("wish"))
+        setWishlist(w)
+    }, [wishArr])
 
     const token = localStorage.getItem("token")
     const { basket, basketFlag } = useSelector((state) => state.BasketSlice)
@@ -78,10 +81,10 @@ function Header() {
                 }
             })
         }
-        setOverlay(false)   
+        setOverlay(false)
     }
 
-    function closeOver(e){
+    function closeOver(e) {
         e.stopPropagation()
         setOverlay(false)
         setValue('')
@@ -132,14 +135,14 @@ function Header() {
                                     <span>
                                         <IoSearchOutline />
                                     </span>
-                                    <input 
-                                    onChange={(e) => setValue(e.target.value)}
-                                    value={value}
-                                    type="text" 
-                                    className='text-[#787878] pl-2 outline-none bg-transparent text-[0.875em]' 
-                                    placeholder='Search for..' />
-                                    <span  className='z-[999] absolute cursor-pointer right-2'>
-                                        {overlay && <FaXmark onClick={(e) => closeOver(e)} /> }
+                                    <input
+                                        onChange={(e) => setValue(e.target.value)}
+                                        value={value}
+                                        type="text"
+                                        className='text-[#787878] pl-2 outline-none bg-transparent text-[0.875em]'
+                                        placeholder='Search for..' />
+                                    <span className='z-[999] absolute cursor-pointer right-2'>
+                                        {overlay && <FaXmark onClick={(e) => closeOver(e)} />}
                                     </span>
                                 </div>
                             </div>
@@ -155,8 +158,8 @@ function Header() {
                                     <SlHeart onClick={handleWish} className='text-[1.25em]' />
                                 </button>
                                 <span
-                                    className={`${wishArr?.length > 0 ? 'flex' : 'hidden'} w-4 bg-[#DC375F] rounded-[50px] h-4 justify-center items-center text-[10px] text-white absolute top-[-3px] right-[1px]`}>
-                                    {wishArr?.length}
+                                    className={`${wishlist?.length > 0 ? 'flex' : 'hidden'} w-4 bg-[#DC375F] rounded-[50px] h-4 justify-center items-center text-[10px] text-white absolute top-[-3px] right-[1px]`}>
+                                    {wishlist?.length}
                                 </span>
                             </div>
                             <div className='relative'>

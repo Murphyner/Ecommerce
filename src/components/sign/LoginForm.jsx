@@ -18,6 +18,7 @@ function LoginForm({ setChange }) {
             localStorage.clear()
             localStorage.setItem("token", data.token)
             localStorage.setItem("user", JSON.stringify(data.user))
+            localStorage.setItem("wish", JSON.stringify([]))
             navigate("/account")
             window.location.reload()
         }

@@ -14,7 +14,7 @@ function AccountComp() {
     const {img} = useSelector(state => state.accountSlice)
 
     const [updateUser , {data, isSuccess}] = useUpdateUserMutation()
-
+    
     useEffect(() => {
         if(isSuccess){
             localStorage.removeItem("user")

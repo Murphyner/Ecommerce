@@ -40,6 +40,7 @@ function RegisterForm({ setChange }) {
             localStorage.clear()
             localStorage.setItem("token", data.token)
             localStorage.setItem("user", JSON.stringify(data.user))
+            localStorage.setItem("wish", JSON.stringify([]))
             dispatch(setBasket(data.user.cart))
             navigate(`/account`)
             window.location.reload()

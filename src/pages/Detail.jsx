@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import DetailSlick from "../components/slider/DetailSlick"
-import { FaFacebookF, FaPinterest, FaRegStar, FaStar, FaTwitter } from "react-icons/fa"
+import { FaFacebookF, FaHeart, FaPinterest, FaRegHeart, FaRegStar, FaStar, FaTwitter } from "react-icons/fa"
 import { FiMinus, FiPlus } from "react-icons/fi"
 import { CiHeart } from "react-icons/ci"
 import ResponsiveSlick from "../components/slider/ResponsiveSlick"
@@ -12,7 +12,7 @@ import SizeComp from "../components/static/SizeComp"
 import Loading from "../components/static/Loading"
 import { useDispatch, useSelector } from "react-redux"
 import { setBasketFlag } from "../store/BasketSlice"
-import { toast } from "react-toastify"
+import { toast, ToastContainer } from "react-toastify"
 import { setWishArr } from "../store/WishlistSlice"
 
 function Detail() {
@@ -21,7 +21,13 @@ function Detail() {
     const { id } = useParams()
     const { data, isLoading } = useGetProductByIdQuery(id)
 
-    const { data : arr, isLoading : load } = useFilterProductQuery({
+    const { wishArr } = useSelector(state => state.WishlistSlice)
+
+    const isInWishList = wishArr.some(wishItem => +wishItem.id === +id); 
+
+    const [screen, setScreen] = useState(isInWishList); 
+
+    const { data: arr, isLoading: load } = useFilterProductQuery({
         page: 1,
         limit: 20,
         sortBy: 'price',
@@ -34,11 +40,11 @@ function Detail() {
 
     const [flag, setFlag] = useState(-1)
     const [sizeFlag, setSizeFlag] = useState(-1)
-    const [wish, setWish] = useState(false)
 
     const token = localStorage.getItem("token")
 
     const [addCart, { isSuccess, isError }] = useAddCartMutation()
+
 
     function handleChange(x) {
         if (count === 1 && x === -1) {
@@ -48,22 +54,7 @@ function Detail() {
         }
     }
 
-
-    const { wishArr } = useSelector(state => state.WishlistSlice)
     const { basketFlag } = useSelector((state) => state.BasketSlice)
-
-    function handleAddWish() {
-        dispatch(setWishArr(data))
-        setWish(!wish)
-    }
-
-    useEffect(() => {
-        localStorage.setItem("wish", JSON.stringify(wishArr))
-    }, [wishArr])
-
-    useEffect(() => {
-        localStorage.setItem(`wish-${id}`, wish);
-    }, [wish]);
 
     function handleAdd() {
         if (token) {
@@ -95,11 +86,25 @@ function Detail() {
         }
     }, [isSuccess, isError])
 
+    useEffect(() => {
+        setScreen(isInWishList); 
+    }, [isInWishList]);
+
+    function handleAddWish() {
+        if (!token) {
+            toast.error("Please register")
+            return;
+        }
+        dispatch(setWishArr(data)); 
+        setScreen(!screen)
+    }
+
     if (isLoading) {
         return <Loading />
     }
     return (
-        <main>
+        <main className="overflow-hidden">
+            <ToastContainer />
             <div className="container 2xl:w-[1280px] mx-auto md:px-4">
                 <div className='px-8 md:px-0'>
                     <div className="py-10">
@@ -121,7 +126,7 @@ function Detail() {
                             </nav>
                         </div>
                         <div id="detailSlick" className="flex justify-between flex-wrap">
-                            <div className="w-full lg:mb-0 lg:w-5/12 lg:pr-10 mb-14">
+                            <div className="w-7/12 mx-auto lg:mb-0 lg:w-5/12 lg:pr-10 mb-14">
                                 <DetailSlick price={data.price} dis={data.discount} img={data.images} />
                             </div>
                             <div className="w-full lg:pl-3 lg:mb-0 lg:w-6/12 mb-4">
@@ -178,8 +183,12 @@ function Detail() {
                                         </div>
                                         <div className="w-full lg:w-2/12 lg:pl-2 mb-3">
                                             <button onClick={handleAddWish} className="w-full text-[#999] rounded-sm border lg:py-3 border-[#EAEAEA] gap-2 py-2 flex justify-center items-center">
-                                                <CiHeart />
-                                                <span className="lg:hidden">Add to wishlist</span>
+                                                {!screen ? <FaRegHeart /> :
+                                                    <FaHeart className={`text-red-600`} />}
+                                                <span className="lg:hidden">
+                                                    {!screen ? "Add to wishlist" :
+                                                        "Remove to wishlist"}
+                                                </span>
                                             </button>
                                         </div>
                                         <div className="w-full">

@@ -1,5 +1,5 @@
 import { nanoid } from '@reduxjs/toolkit'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -8,22 +8,23 @@ import { useAddCartMutation } from '../../store/api'
 import { toast } from 'react-toastify'
 
 function WishlistComp() {
-    const { wishArr } = useSelector(state => state.WishlistSlice)
 
     const [addCart, {isSuccess}] = useAddCartMutation()
-
     const dispatch = useDispatch()
+    const { wishArr } = useSelector(state => state.WishlistSlice)
+    const [flag, setFlag] = useState(false)
 
-    const flag = wishArr.length > 0
+    useEffect(() => {
+        if(wishArr.length > 0){
+            setFlag(true)
+        }else{
+            setFlag(false)
+        }
+    },[wishArr])
 
     function handleDelWish(obj){
         dispatch(setWishArr(obj))
-        localStorage.setItem(`wish-${obj.id}` , false)
     }
-
-    useEffect(() => {
-        localStorage.setItem("wish", JSON.stringify(wishArr))
-    }, [wishArr])
 
     function handleAddCart(arr){
         let obj = {
